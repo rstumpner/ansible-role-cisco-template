@@ -1,0 +1,20 @@
+---
+dependencies: []
+
+galaxy_info:
+  author: rolandstumpner
+  description: Cisco IOS Config Builder
+  company: ""
+  license: "license (BSD, MIT)"
+  min_ansible_version: 2.4
+  platforms:
+    - name: Cisco IOS
+      versions:
+      - 12.1
+      - 15
+      - 16
+    - name: Cisco NX-OS
+      versions:
+      - all
+  galaxy_tags:
+    - networking
