@@ -1,0 +1,10 @@
+---
+- name: Create Configuration Directory
+  connection: local
+  tags: build-config-cisco
+  file: path=./roles/build-config-cisco/config/ state=directory
+
+- name: Generate Cisco Configuration files
+  connection: local
+  tags: build-config-cisco
+  template: src=config.j2 dest=./roles/build-config-cisco/config/{{ inventory_hostname }}.conf

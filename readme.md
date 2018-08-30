@@ -15,6 +15,10 @@ Example Playbook:
   roles:
      - build-config-cisco-ios
 
+Tested:
+ - Cisco IOS-XE
+ - Cisco NX-OS
+
 License:
     MIT / BSD
 
