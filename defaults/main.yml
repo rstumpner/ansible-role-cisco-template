@@ -1,4 +1,5 @@
 ---
----
 # Anible Variable from Inventory
 # inventory_hostname: localhost
+
+ansible_python_interpreter: /usr/bin/python3

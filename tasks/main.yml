@@ -4,6 +4,14 @@
   tags: build-config-cisco
   file: path=./roles/build-config-cisco/config/ state=directory
 
+#- name: Generate local Variables
+#  connection: local
+#  vars: 
+#    time: "{{ lookup('pipe','date +%Y-%m-%d-%H-%M-%S') }}"
+- name: Debug
+  debug: var=ansible_date_time
+  debug: msg="the current date is {{ ansible_date_time.date }}"
+
 - name: Generate Cisco Configuration files
   connection: local
   tags: build-config-cisco

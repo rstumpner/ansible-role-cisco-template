@@ -1,0 +1,9 @@
+---
+# Set Ansible to python3
+
+
+- hosts: all
+  gather_facts: true
+  roles:
+#     - build-config-cisco-ios
+    - { role: '../../build-config-cisco-ios' }

@@ -2,7 +2,7 @@
 dependencies: []
 
 galaxy_info:
-  author: rolandstumpner
+  author: roland@stumpner.at
   description: Cisco IOS Config Builder
   company: ""
   license: "license (BSD, MIT)"
