@@ -6,4 +6,4 @@
   gather_facts: true
   roles:
 #     - build-config-cisco-ios
-    - { role: '../../build-config-cisco-ios' }
+    - { role: '../../ansible-role-testing-example' }
