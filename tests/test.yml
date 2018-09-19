@@ -1,9 +1,7 @@
 ---
 # Set Ansible to python3
 
-
 - hosts: all
   gather_facts: true
   roles:
-#     - build-config-cisco-ios
     - { role: '../../ansible-role-testing-example' }

@@ -1,26 +1,24 @@
-# Ansible Role build-config-cisco for the Netdeploy Pipeline
+# Ansible Example Role for Testing
 
-
-Cisco Config Templates in Jinja2 to Generate Files for Cisco Switches to paste the Config.
+This is a Ansible Example Role for some Testing options for an Ansible Role
 
 Requirements:
     None
 
 Role Variables:
-    See in the Default Directory
+    See in the defaults Directory
 
 Example Playbook:
-- hosts: network
-  gather_facts: no
+- hosts: all
+  gather_facts: yes
   roles:
-     - build-config-cisco-ios
+     - ansible-role-testing-example
 
 Tested:
- - Cisco IOS-XE
- - Cisco NX-OS
-
+ - Vagrant Ubuntu 16.04
+ 
 License:
     MIT / BSD
 
 Author Information:
-Roland Stumpner 
+roland@stumpner.at

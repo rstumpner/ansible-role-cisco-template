@@ -1,6 +1,8 @@
 # Do not Track Vagrant Status Files
 /tests/.vagrant
 /tests/*.log
+/tests/vagrant/.vagrant
+/tests/vagrant/*.log
 # Do not Trak Anisble Status Files
 /tests/*.retry
 /tests/roles/*
