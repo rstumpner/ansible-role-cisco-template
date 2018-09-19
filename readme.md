@@ -9,10 +9,12 @@ Role Variables:
     See in the defaults Directory
 
 Example Playbook:
+```YAML
 - hosts: all
   gather_facts: yes
   roles:
      - ansible-role-testing-example
+```
 
 Tested:
  - Vagrant Ubuntu 16.04
