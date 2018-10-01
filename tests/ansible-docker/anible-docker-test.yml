@@ -50,4 +50,4 @@
 - hosts: ansible-role-test
   gather_facts: true
   roles:
-    - { role: '../../ansible-role-testing-example' }
+    - { role: '../../../ansible-role-testing-example' }
