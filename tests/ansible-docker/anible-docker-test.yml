@@ -57,6 +57,6 @@
     ansible_python_interpreter: /usr/bin/python3
   pre_tasks:
     - name: install python 3
-    raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)  
+      raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)  
   roles:
     - { role: '../../../ansible-role-testing-example' }
