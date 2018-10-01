@@ -3,10 +3,11 @@ Testing the Ansible Role with Docker (Ubuntu 16.04) and use Ansible to create th
 Requirements:
  - Ubuntu 16.04
  - Ansible 
-
+ - pip install docker-py
+  
 Simple Testing:
 ```bash
-playbook -i inventory ansible-docker-test.yml
+ansible-playbook -i hosts ansible-docker-test.yml
 ```
 
 Rerun the Test:

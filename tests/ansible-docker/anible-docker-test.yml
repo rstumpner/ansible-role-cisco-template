@@ -5,6 +5,10 @@
   vars:
     image_name: "ubuntu:16.04"
   tasks:
+    - name: Install Docker Python Module
+      pip:
+        name: docker-py
+
     - name: Build or pull image if needed
       docker_image:
         name: "{{ image_name.split(':')[0] }}"
