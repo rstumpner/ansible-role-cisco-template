@@ -46,10 +46,17 @@
 #- hosts: ansible-role-test
 #  tasks:
 #    - import_playbook: ../../../playbooks/init/main.yml
+#- hosts: ansible-role-test
+#  gather_facts: false
+#  - name: install python 3
+#    raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
 
 - hosts: ansible-role-test
   gather_facts: false
   vars:
     ansible_python_interpreter: /usr/bin/python3
+  pre_tasks:
+    - name: install python 3
+    raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)  
   roles:
     - { role: '../../../ansible-role-testing-example' }
