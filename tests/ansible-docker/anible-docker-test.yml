@@ -5,6 +5,10 @@
   vars:
     image_name: "ubuntu:16.04"
   tasks:
+    - name: Install Python Package pip3
+      apt:
+        name: python3-pip
+
     - name: Install Docker Python Module
       pip:
         name: docker-py
