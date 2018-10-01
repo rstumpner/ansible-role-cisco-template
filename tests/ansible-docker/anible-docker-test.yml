@@ -49,5 +49,7 @@
 
 - hosts: ansible-role-test
   gather_facts: true
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
   roles:
     - { role: '../../../ansible-role-testing-example' }
