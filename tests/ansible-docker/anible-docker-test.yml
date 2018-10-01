@@ -48,7 +48,7 @@
 #    - import_playbook: ../../../playbooks/init/main.yml
 
 - hosts: ansible-role-test
-  gather_facts: true
+  gather_facts: false
   vars:
     ansible_python_interpreter: /usr/bin/python3
   roles:
