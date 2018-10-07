@@ -1,0 +1,62 @@
+---
+- hosts: localhost
+  become: false
+  gather_facts: false
+  vars:
+    image_name: "ubuntu:16.04"
+  tasks:
+    - name: Install Python Package pip3
+      apt:
+        name: python3-pip
+
+    - name: Install Docker Python Module
+      pip:
+        name: docker-py
+
+    - name: Build or pull image if needed
+      docker_image:
+        name: "{{ image_name.split(':')[0] }}"
+        tag: "{{ image_name.split(':')[1] }}"
+        dockerfile: "Dockerfile.{{ image_name | replace(':', '.') }}"
+        path: "{{ 'images' if 'builded' in image_name else '' }}"
+        force: "{{ force_build_image | default(false) }}"
+
+    - name: Run docker for testing Ansible role
+      docker_container:
+        name: "ansible-role-test"
+        image: "{{ image_name }}"
+        command: "/sbin/init"
+        state: started
+        privileged: true
+#      with_items:
+#        - "{{ postgresql_versions }}"
+
+    - name: Add Dockers into ansible-role-test inventory group
+      add_host:
+        name: "ansible-role-test"
+        ansible_connection: docker
+        ansible_user: root
+        ansible_python_interpreter: python
+        groups: ansible-role-test
+#        postgresql_version: "{{ item }}"
+      changed_when: false
+#      with_items:
+#        - "{{ postgresql_versions }}"
+
+#- hosts: ansible-role-test
+#  tasks:
+#    - import_playbook: ../../../playbooks/init/main.yml
+#- hosts: ansible-role-test
+#  gather_facts: false
+#  - name: install python 3
+#    raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+
+- hosts: ansible-role-test
+  gather_facts: false
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+  pre_tasks:
+    - name: install python 3
+      raw: test -e /usr/bin/python3 || (apt -y update && apt install -y python3-minimal)  
+  roles:
+    - { role: '../../../ansible-role-testing-example' }
