@@ -9,13 +9,3 @@ Simple Testing:
 ```bash
 ansible-playbook -i hosts ansible-docker-test.yml
 ```
-
-Rerun the Test:
-```bash
-vagrant provision
-```
-
-Checking the Test Environment:
-```bash
-vagrant ssh
-```
