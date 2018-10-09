@@ -21,7 +21,7 @@ syntax-check:
     - 'ansible-playbook -i tests/ansible-docker.yml tests/test.yml --syntax-check'
 
 testing:
-  stage: test
+  stage: testing
   image: ubuntu:latest
   artifacts:
     when: always
