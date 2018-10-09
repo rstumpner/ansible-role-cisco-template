@@ -24,7 +24,7 @@ syntax-check:
     - pip install pysphere
     - pip install pyvmomi
   script:
-    - 'ansible-playbook -i tests/ansible-docker.yml tests/test.yml --syntax-check'
+    - 'ansible-playbook -i tests/ansible-docker/hosts tests/test.yml --syntax-check'
 
 
 testing:
@@ -35,4 +35,4 @@ testing:
     paths:
       - tests/
   script:
-    - 'ansible-playbook -i tests/ansible-docker.yml tests/test.yml'
+    - 'ansible-playbook -i tests/ansible-docker/hosts tests/test.yml'
