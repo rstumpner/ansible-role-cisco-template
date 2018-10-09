@@ -34,5 +34,13 @@ testing:
     when: always
     paths:
       - tests/
+ before_script:
+    - apt-get update -qq
+    - apt install --no-install-recommends -y python-minimal software-properties-common git vim iputils-ping mtr dnsutils rsync tree python-pip
+    - apt-add-repository ppa:ansible/ansible
+    - apt update
+    - apt install -y ansible python-markupsafe python-ecdsa libyaml-0-2 python-jinja2 python-yaml python-paramiko python-httplib2 python-crypto sshpass
+    - pip install pysphere
+    - pip install pyvmomi
   script:
     - 'ansible-playbook -i tests/ansible-docker/hosts tests/test.yml'
