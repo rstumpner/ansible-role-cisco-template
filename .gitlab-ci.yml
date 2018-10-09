@@ -1,0 +1,31 @@
+# .gitlab-ci.yml
+stages:
+  - review
+  - testing
+
+variables:
+  ANSIBLE_FORCE_COLOR: 'true'
+  GIT_SSL_NO_VERIFY: "1"
+  ANSIBLE_HOST_KEY_CHECKING: 'false'
+
+syntax-check:
+  stage: review
+  image: ubuntu:latest
+#  only:
+#    - review
+#  tags:
+#    - test
+#  before_script:
+#    - 'git config --global http.sslverify false'
+  script:
+    - 'ansible-playbook -i tests/ansible-docker.yml tests/test.yml --syntax-check'
+
+testing:
+  stage: test
+  image: ubuntu:latest
+  artifacts:
+    when: always
+    paths:
+      - tests/
+  script:
+    - 'ansible-playbook -i tests/ansible-docker.yml tests/test.yml'
