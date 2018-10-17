@@ -1,7 +1,7 @@
 ---
 - name: Create a simple Connector Card
   office_365_connector_card:
-    webhook: https://outlook.office.com/webhook/GUID/IncomingWebhook/GUID/GUID
+    webhook: https://outlook.office.com/webhook/831ef02c-a3b8-45de-af13-fdc4a1271b14@f88d4b73-6bb2-4b9a-abc7-eb96e5a6407c/IncomingWebhook/a7fc849e118c41bfa1ad139d5b51a938/34dce05f-774c-4604-8443-06abb2807cc0
     text: 'Hello, World!'
     
 - name: Create Configuration Directory
