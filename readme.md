@@ -1,23 +1,35 @@
-# Ansible Example Role for Testing
+# Ansible Role Cisco Hostname
 
-This is a Ansible Example Role for some Testing options for an Ansible Role
+This is a Ansible Role for setting Hostnames on Cisco Devices.
+
+Aufbau:
+- Build
+- Test
+    - snap
+    - testing changes (--diff)
 
 Requirements:
     None
 
 Role Variables:
-    See in the defaults Directory
+    - hostname
 
-Example Playbook:
+Using this Role:
+Drive to Ansible Role Directory:
+    - git clone https://fhzengitlab1.fhooe.at/P50010/cisco-hostname.git
+
+Aktivate Role in a Playbook:
+
+Example:
 ```YAML
 - hosts: all
-  gather_facts: yes
   roles:
-     - ansible-role-testing-example
+     - cisco-hostname
 ```
 
 Tested:
- - Vagrant Ubuntu 16.04
+ - Cisco IOS
+ - Cisco IOS-XE
  
 License:
     MIT / BSD

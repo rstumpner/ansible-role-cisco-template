@@ -1,25 +1,31 @@
 ---
-- name: Create a simple Connector Card
-  office_365_connector_card:
-    webhook: https://outlook.office.com/webhook/831ef02c-a3b8-45de-af13-fdc4a1271b14@f88d4b73-6bb2-4b9a-abc7-eb96e5a6407c/IncomingWebhook/a7fc849e118c41bfa1ad139d5b51a938/34dce05f-774c-4604-8443-06abb2807cc0
-    text: 'Hello, World!'
+- name: Create Build Directory
+  connection: local
+  tags: build
+  file: path=./roles/cisco-hostname/config/ state=directory
+  when:
+    - ansible_check_mode
+
+- name: Generate Cisco Configuration from Template
+  connection: local
+  tags: build
+  template:
+    src: config.j2 
+    dest: ./roles/cisco-hostname/config/{{ inventory_hostname }}.txt
+  when:
+    - ansible_check_mode
     
-- name: Create Configuration Directory
+# Set Hostname on Device
+- name: Config Switch Hostname
+  tags: oam
   connection: local
-  tags: build-config-cisco
-  file: path=./roles/build-config-cisco/config/ state=directory
+  ios_config:
+      host: "{{ ansible_ssh_host }}"
+      username: "{{ ansible_ssh_user }}"
+      password: "{{ ansible_ssh_password }}"
+      lines: hostname {{ inventory_hostname }}
+  when:
+    - not ansible_check_mode
 
-#- name: Generate local Variables
-#  connection: local
-#  vars: 
-#    time: "{{ lookup('pipe','date +%Y-%m-%d-%H-%M-%S') }}"
-- name: Debug
-  debug: var=ansible_date_time
-  debug: msg="the current date is {{ ansible_date_time.date }}"
-
-- name: Generate Cisco Configuration files
-  connection: local
-  tags: build-config-cisco
-  template: src=config.j2 dest=./roles/build-config-cisco/config/{{ inventory_hostname }}.conf
 
 
