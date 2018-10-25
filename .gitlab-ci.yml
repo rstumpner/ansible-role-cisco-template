@@ -1,6 +1,6 @@
 # .gitlab-ci.yml
 stages:
-  - review
+  - build
   - testing
 
 variables:
@@ -9,7 +9,7 @@ variables:
   ANSIBLE_HOST_KEY_CHECKING: 'false'
 
 syntax-check:
-  stage: review
+  stage: build
   image: ubuntu:latest
 #  only:
 #    - review
@@ -26,6 +26,23 @@ syntax-check:
   script:
     - 'ansible-playbook -i tests/ansible-docker/hosts tests/test.yml --syntax-check'
 
+build-config:
+  stage: build
+  image: ubuntu:latest
+  artifacts:
+    when: always
+    paths:
+      - tests/
+  before_script:
+    - apt-get update -qq
+    - apt install --no-install-recommends -y python-minimal software-properties-common git vim iputils-ping mtr dnsutils rsync tree python-pip
+    - apt-add-repository ppa:ansible/ansible
+    - apt update
+    - apt install -y ansible python-markupsafe python-ecdsa libyaml-0-2 python-jinja2 python-yaml python-paramiko python-httplib2 python-crypto sshpass
+    - pip install pysphere
+    - pip install pyvmomi
+  script:
+    - 'ansible-playbook -i tests/ansible-docker/hosts tests/test.yml --check --tags build'
 
 testing:
   stage: testing
@@ -43,4 +60,4 @@ testing:
     - pip install pysphere
     - pip install pyvmomi
   script:
-    - 'ansible-playbook -i tests/ansible-docker/hosts tests/test.yml'
+    - 'ansible-playbook -i tests/ansible-docker/hosts tests/test.yml --check --diff'
