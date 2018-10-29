@@ -14,8 +14,36 @@
     dest: ./roles/cisco-hostname/config/{{ inventory_hostname }}.txt
   when:
     - ansible_check_mode
-    
-# Set Hostname on Device
+
+- name: Take a Configuration Backup from Device
+  connection: local
+  tags: bak
+  ios_config:
+    host: "{{ ansible_ssh_host }}"
+    username: "{{ ansible_ssh_user }}"
+    password: "{{ ansible_ssh_password }}"
+    backup: yes
+  ignore_errors: yes
+  when:
+    - ansible_check_mode
+
+- name: Get current State of the device 
+  tags: bak
+  connection: local
+  ignore_errors: yes
+  ios_facts:
+      host: "{{ ansible_ssh_host }}"
+      username: "{{ ansible_ssh_user }}"
+      password: "{{ ansible_ssh_password }}"
+  register: iosfacts_out
+
+- name: Copy Facts to File
+  connection: local
+  ignore_errors: yes
+  copy: content="{{ iosfacts_out | to_nice_json }}" dest=./state/{{inventory_hostname}}_iosfacts.json
+
+
+# Set Hostname on Device from Template
 - name: Config Switch Hostname
   tags: oam
   connection: local
