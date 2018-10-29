@@ -11,7 +11,7 @@
   tags: build
   template:
     src: config.j2 
-    dest: ./roles/cisco-hostname/config/{{ inventory_hostname }}.txt
+    dest: ./roles/cisco-hostname/build/{{ inventory_hostname }}.txt
   when:
     - ansible_check_mode
 
