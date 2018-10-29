@@ -2,7 +2,7 @@
 - name: Create Build Directory
   connection: local
   tags: build
-  file: path=./roles/cisco-hostname/config/ state=directory
+  file: path=./roles/cisco-hostname/build/ state=directory
   when:
     - ansible_check_mode
 
