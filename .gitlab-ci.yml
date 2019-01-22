@@ -33,6 +33,7 @@ build-config:
     when: always
     paths:
       - config/
+      - build/
   before_script:
     - apt-get update -qq
     - apt install --no-install-recommends -y python-minimal software-properties-common git vim iputils-ping mtr dnsutils rsync tree python-pip
