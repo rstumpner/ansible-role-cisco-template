@@ -6,12 +6,12 @@
   when:
     - ansible_check_mode
 
-- name: Generate Cisco Configuration from Template
+- name: Generate Cisco CLI Configuration from Template
   connection: local
   tags: build
   template:
-    src: config.j2 
-    dest: ./roles/cisco-hostname/build/{{ inventory_hostname }}.txt
+    src: config-cli.j2 
+    dest: ./roles/cisco-hostname/build/{{ inventory_hostname }}-config.txt
   when:
     - ansible_check_mode
 

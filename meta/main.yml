@@ -3,16 +3,15 @@ dependencies: []
 
 galaxy_info:
   author: roland@stumpner.at
-  description: Cisco IOS Config Builder
+  description: Cisco IOS Configuration Build for Hostnames
   company: ""
   license: "license (BSD, MIT)"
   min_ansible_version: 2.4
   platforms:
     - name: Cisco IOS
       versions:
-      - 12.1
-      - 15
-      - 16
+      - "15.x"
+      - "16.x"
     - name: Cisco NX-OS
       versions:
       - all
