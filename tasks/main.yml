@@ -8,7 +8,9 @@
 
 - name: Generate Cisco CLI Configuration from Template
   connection: local
-  tags: build
+  tags: 
+    - build
+    - cli
   template:
     src: config-cli.j2 
     dest: ./roles/cisco-hostname/build/{{ inventory_hostname }}-config.txt

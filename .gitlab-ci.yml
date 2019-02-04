@@ -52,6 +52,9 @@ testing:
   artifacts:
     when: always
     paths:
+      - config/
+      - build/
+      - state/
       - tests/
   before_script:
     - apt-get update -qq
