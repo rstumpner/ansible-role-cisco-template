@@ -3,10 +3,33 @@
 This is a Ansible Role for setting Hostnames on Cisco Devices.
 
 Aufbau:
-- Build
-- Test
-    - snap
-    - testing changes (--diff)
+- Build Cisco Config
+  - All Availiable Build Modules
+    - All ansible modes
+    - tags: build
+  - Cisco IOS CLI
+    - All ansible modes
+    - tags: 
+      - build
+      - cli
+- Testing Device Config
+  - Snapshot of Device Running Config
+    - All ansible modes
+    - tags:
+      - bak
+  - Snapshot of Device state Config
+    - All ansible modes
+    - tags:
+      - bak
+  - Testing Config changes (--diff)
+    - All ansible modes
+    - tags:
+- Deploy Device Config
+  - Deploy Config with CLI
+    - not ansible check-mode
+    - tags:
+      - oam
+      - cli 
 
 Requirements:
     None

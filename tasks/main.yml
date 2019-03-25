@@ -5,8 +5,9 @@
   file: path=./roles/cisco-hostname/build/ state=directory
   when:
     - ansible_check_mode
+    - not ansible_check_mode
 
-- name: Generate Cisco CLI Configuration from Template
+- name: Bild Cisco Configuration CLI from Template
   connection: local
   tags: 
     - build
@@ -16,6 +17,7 @@
     dest: ./roles/cisco-hostname/build/{{ inventory_hostname }}-config.txt
   when:
     - ansible_check_mode
+    - not ansible_check_mode
 
 - name: Take a Configuration Backup from Device
   connection: local
@@ -28,6 +30,7 @@
   ignore_errors: yes
   when:
     - ansible_check_mode
+    - not ansible_check_mode
 
 - name: Get current State of the device 
   tags: bak
@@ -46,8 +49,10 @@
 
 
 # Set Hostname on Device from Template
-- name: Config Switch Hostname
-  tags: oam
+- name: Deploy Switch Hostname Config CLI
+  tags: 
+    - oam
+    - cli
   connection: local
   ios_config:
       host: "{{ ansible_ssh_host }}"
@@ -56,6 +61,3 @@
       lines: hostname {{ inventory_hostname }}
   when:
     - not ansible_check_mode
-
-
-
