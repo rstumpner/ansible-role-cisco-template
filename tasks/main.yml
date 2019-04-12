@@ -19,6 +19,13 @@
     - ansible_check_mode
     - not ansible_check_mode
 
+- name: Create Config Backup Directory
+  connection: local
+  tags: 
+    - state
+    - bak
+  file: path=./roles/cisco-hostname/config/ state=directory
+
 - name: Take a Configuration Backup from Device
   connection: local
   tags: 
@@ -30,9 +37,13 @@
     password: "{{ ansible_ssh_password }}"
     backup: yes
   ignore_errors: yes
-  when:
-    - ansible_check_mode
-    - not ansible_check_mode
+
+- name: Create Device State Directory
+  connection: local
+  tags: 
+    - state
+    - bak
+  file: path=./roles/cisco-hostname/config/ state=directory
 
 - name: Get current State of the device 
   tags: 
@@ -46,7 +57,7 @@
       password: "{{ ansible_ssh_password }}"
   register: iosfacts_out
 
-- name: Copy Facts to File
+- name: Copy Device State to File
   tags:
     - bak
     - state
