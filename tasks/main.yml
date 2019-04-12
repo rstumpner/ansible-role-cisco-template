@@ -21,7 +21,9 @@
 
 - name: Take a Configuration Backup from Device
   connection: local
-  tags: bak
+  tags: 
+    - bak
+    - state
   ios_config:
     host: "{{ ansible_ssh_host }}"
     username: "{{ ansible_ssh_user }}"
@@ -33,7 +35,9 @@
     - not ansible_check_mode
 
 - name: Get current State of the device 
-  tags: bak
+  tags: 
+    - bak
+    - state
   connection: local
   ignore_errors: yes
   ios_facts:
@@ -43,6 +47,9 @@
   register: iosfacts_out
 
 - name: Copy Facts to File
+  tags:
+    - bak
+    - state
   connection: local
   ignore_errors: yes
   copy: content="{{ iosfacts_out | to_nice_json }}" dest=./state/{{inventory_hostname}}_iosfacts.json
