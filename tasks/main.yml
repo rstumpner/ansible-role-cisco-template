@@ -27,6 +27,7 @@
   file: path=./roles/cisco-hostname/config/ state=directory
 
 - name: Take a Configuration Backup from Device
+  gather_facts: no
   connection: local
   tags: 
     - bak
@@ -45,11 +46,12 @@
     - bak
   file: path=./roles/cisco-hostname/config/ state=directory
 
-- name: Get current State of the device 
+- name: Get current State of the device
+  gather_facts: no
+  connection: local 
   tags: 
     - bak
     - state
-  connection: local
   ignore_errors: yes
   ios_facts:
       host: "{{ ansible_ssh_host }}"
@@ -68,10 +70,11 @@
 
 # Set Hostname on Device from Template
 - name: Deploy Switch Hostname Config CLI
+  gather_facts: no
+  connection: local
   tags: 
     - oam
     - cli
-  connection: local
   ios_config:
       host: "{{ ansible_ssh_host }}"
       username: "{{ ansible_ssh_user }}"
