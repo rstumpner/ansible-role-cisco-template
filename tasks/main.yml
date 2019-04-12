@@ -27,7 +27,6 @@
   file: path=./roles/cisco-hostname/config/ state=directory
 
 - name: Take a Configuration Backup from Device
-  gather_facts: no
   connection: local
   tags: 
     - bak
@@ -47,7 +46,6 @@
   file: path=./roles/cisco-hostname/config/ state=directory
 
 - name: Get current State of the device
-  gather_facts: no
   connection: local 
   tags: 
     - bak
@@ -70,7 +68,6 @@
 
 # Set Hostname on Device from Template
 - name: Deploy Switch Hostname Config CLI
-  gather_facts: no
   connection: local
   tags: 
     - oam
