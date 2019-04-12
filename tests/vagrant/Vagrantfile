@@ -6,11 +6,28 @@ Vagrant.configure('2') do |config|
   # Ensure we use our vagrant private key
   # config.ssh.insert_key = false
   # config.ssh.private_key_path = '~/.vagrant.d/insecure_private_key'
-  
-  config.vm.define "client" do |client|
+# Provision Cisco Nexus 9000
+  config.vm.define "devicenxos1" do |devicenxos1|
+    devicenxos1.vm.box = "nxos/7.0.3.I7"
+    devicenxos1.vm.boot_timeout = 420
+    devicenxos1.vm.provider "virtualbox" do |vb|
+      #   # Display the VirtualBox GUI when booting the machine
+      #   vb.gui = true
+      #
+      #   # Customize the amount of memory on the VM:
+        vb.memory = "6096"
+    end
+    devicenxos1.vm.network "private_network", auto_config: false, type: "dhcp"
+    devicenxos1.vm.network "private_network", auto_config: false, virtualbox__intnet: "nxosv_network2"
+  end
+
+# Provision Ansible Management Client
+
+  config.vm.define "ansible" do |client|
     client.vm.box = "ubuntu/xenial64"
     client.vm.hostname = 'ansible-role-testing'
     client.vm.network "private_network", type: "dhcp"
+    client.vm.network "private_network", auto_config: false, virtualbox__intnet: "nxosv_network2"
     client.vm.network "forwarded_port", guest: 80, host: 8082
     client.vm.provision "ansible" do |ansible|
             ansible.playbook = "../test.yml"
@@ -18,4 +35,49 @@ Vagrant.configure('2') do |config|
             ansible.verbose = "vvv"
     end
   end
+
+
 end  
+
+
+
+
+
+
+
+
+#$script_ansible = <<SCRIPT
+#sudo apt-get install -y software-properties-common
+#sudo apt-add-repository -y ppa:ansible/ansible
+#sudo apt-get update
+#sudo apt-get upgrade -y
+#sudo apt-get install -y avahi-daemon libnss-mdns
+#sudo apt-get install -y git
+#sudo apt-get install -y curl
+#sudo apt-get install -y links
+#sudo apt-get install -y tree
+#sudo apt-get install -y ansible
+#sudo useradd -g users -p $(openssl passwd -1 "ansible") -m -s /bin/bash ansible
+#SCRIPT
+
+
+
+#  config.vm.define "ansible" do |ansible|
+#    ansible.vm.box = "ubuntu/xenial64"
+#    ansible.vm.hostname = 'ansible'
+#    ansible.vm.network "private_network", type: "dhcp"
+#    ansible.vm.synced_folder "../../vlab-files", "/vlab-files"
+#    ansible.vm.provision "shell", inline: $script_ansible
+#  end
+
+
+
+
+
+#    n9kv1.vm.network "private_network", ip: "192.168.1.2", auto_config: false, virtualbox__intnet: "nxosv_network1"
+#    n9kv1.vm.network "private_network", auto_config: false, virtualbox__intnet: "nxosv_network2"
+#    n9kv1.vm.network "private_network", auto_config: false, virtualbox__intnet: "nxosv_network3"
+#    n9kv1.vm.network "private_network", auto_config: false, virtualbox__intnet: "nxosv_network4"
+#    n9kv1.vm.network "private_network", auto_config: false, virtualbox__intnet: "nxosv_network5"
+#    n9kv1.vm.network "private_network", auto_config: false, virtualbox__intnet: "nxosv_network6"
+#    n9kv1.vm.network "private_network", auto_config: false, virtualbox__intnet: "nxosv_network7"

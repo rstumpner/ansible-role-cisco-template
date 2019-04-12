@@ -3,3 +3,7 @@
 # inventory_hostname: localhost
 
 ansible_python_interpreter: /usr/bin/python3
+inventory_hostname: "localhost"
+ansible_ssh_host: "localhost"
+ansible_ssh_user: admin
+ansible_ssh_password: admin

@@ -1,0 +1,11 @@
+all: # keys must be unique, i.e. only one 'hosts' per group
+    hosts:
+        n9k3v1:
+          ansible_connection: local
+          ansible_host: 127.0.0.1
+          ansible_port: 2222
+          ansible_ssh_host: "localhost"
+          ansible_ssh_user: admin
+          ansible_ssh_password: admin
+        ansible-role-testing:
+          ansible_host: 127.0.0.1

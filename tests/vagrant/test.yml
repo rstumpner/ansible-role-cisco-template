@@ -1,0 +1,7 @@
+---
+# Set Ansible to python3
+
+- hosts: n9k3v1
+#  gather_facts: true
+  roles:
+    - { role: '../../../cisco-hostname' }
