@@ -46,7 +46,7 @@ build-config:
   script:
     - 'ansible-playbook -i tests/ansible-docker/hosts tests/test.yml --check --tags build'
 
-testing:
+testing-diff-checkmode:
   stage: testing
   image: ubuntu:latest
   artifacts:
@@ -66,3 +66,24 @@ testing:
     - pip install pyvmomi
   script:
     - 'ansible-playbook -i tests/ansible-docker/hosts tests/test.yml --check --diff'
+
+testing-state-cli:
+  stage: testing
+  image: ubuntu:latest
+  artifacts:
+    when: always
+    paths:
+      - config/
+      - build/
+      - state/
+      - tests/
+  before_script:
+    - apt-get update -qq
+    - apt install --no-install-recommends -y python-minimal software-properties-common git vim iputils-ping mtr dnsutils rsync tree python-pip
+    - apt-add-repository ppa:ansible/ansible
+    - apt update
+    - apt install -y ansible python-markupsafe python-ecdsa libyaml-0-2 python-jinja2 python-yaml python-paramiko python-httplib2 python-crypto sshpass
+    - pip install pysphere
+    - pip install pyvmomi
+  script:
+    - 'ansible-playbook -i tests/ansible-docker/hosts tests/test.yml --tags state,cli'
