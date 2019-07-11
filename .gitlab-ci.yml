@@ -10,7 +10,7 @@ variables:
   ANSIBLE_HOST_KEY_CHECKING: 'false'
 
 syntax-check:
-  stage: validaion
+  stage: validation
   image: ubuntu:latest
 #  only:
 #    - review
@@ -113,4 +113,4 @@ deploy-cli:
     - pip install pyvmomi
     - ansible --version
   script:
-    - 'ansible-playbook -i tests/ansible-docker/hosts tests/test.yml --tags deploy,cli'
+    - ansible-playbook -i tests/ansible-docker/hosts tests/test.yml --tags deploy,cli
