@@ -13,7 +13,7 @@ Aufbau:
       - build
       - cli
 - Testing Device Config
-  - Snapshot of Device Running Config
+  - Snapshot of Device Running Config and write to Startup
     - All ansible modes
     - tags:
       - bak
@@ -21,15 +21,21 @@ Aufbau:
     - All ansible modes
     - tags:
       - bak
-  - Testing Config changes (--diff)
+  - Review Config changes (--diff)
     - All ansible modes
     - tags:
+      - diff
+  - Testing Config changes
+    - All Ansible modes
+    - tags:
+      - tests
 - Deploy Device Config
   - Deploy Config with CLI
     - not ansible check-mode
     - tags:
-      - oam
-      - cli 
+      - deploy
+      - cli
+      - oam 
 
 Requirements:
     None

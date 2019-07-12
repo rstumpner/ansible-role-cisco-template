@@ -65,11 +65,25 @@
   ignore_errors: yes
   copy: content="{{ iosfacts_out | to_nice_json }}" dest=./state/{{inventory_hostname}}_iosfacts.json
 
-
-# Set Hostname on Device from Template
-- name: Deploy Switch Hostname Config CLI
+- name: Check startup to running config and write to startup config
   connection: local
   tags: 
+    - bak
+    - state
+  ios_config:
+    host: "{{ ansible_ssh_host }}"
+    username: "{{ ansible_ssh_user }}"
+    password: "{{ ansible_ssh_password }}"
+    diff_against: startup
+    save_when: always
+  ignore_errors: yes
+
+
+# Set Hostname on Device from Template
+- name: Deploy Switch Config Hostname on CLI
+  connection: local
+  tags:
+    - deploy 
     - oam
     - cli
   ios_config:
