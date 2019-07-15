@@ -3,6 +3,7 @@ stages:
   - validation
   - build
   - testing
+  - deploy
 
 variables:
   ANSIBLE_FORCE_COLOR: 'true'
@@ -94,7 +95,7 @@ testing-device:
     - 'ansible-playbook -i tests/ansible-docker/hosts tests/test.yml --tags tests'
 
 deploy-cli:
-  stage: testing
+  stage: deploy
   image: ubuntu:latest
   artifacts:
     when: always
