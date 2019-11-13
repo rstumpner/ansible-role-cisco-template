@@ -10,7 +10,7 @@ Aufbau:
   - Cisco IOS CLI
     - All ansible modes
     - tags: 
-      - build
+      - build-cli
       - cli
 - Testing Device Config
   - Snapshot of Device Running Config and write to Startup
