@@ -1,6 +1,6 @@
-# Ansible Role Cisco Hostname
+# Ansible Role Cisco Configuration Template
 
-This is a Ansible Role for setting Hostnames on Cisco Devices.
+This is a Ansible Template Role for setting Hostnames on Cisco Devices.
 
 Aufbau:
 - Build Cisco Config
