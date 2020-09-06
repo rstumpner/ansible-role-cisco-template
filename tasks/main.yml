@@ -1,36 +1,38 @@
 ---
 - name: Create Build Directory
   connection: local
-  tags: build
-  file: path=./roles/cisco-hostname/build/ state=directory
-  when:
-    - ansible_check_mode
-    - not ansible_check_mode
+  tags: 
+    - build
+    - cli
+    - build-cli
+  file: path=./build/{{ role_name|basename }}/ state=directory
 
 - name: Bild Cisco Configuration CLI from Template
   connection: local
   tags: 
     - build
     - cli
+    - build-cli
   template:
-    src: config-cli.j2 
-    dest: ./roles/cisco-hostname/build/{{ inventory_hostname }}-config.txt
-  when:
-    - ansible_check_mode
-    - not ansible_check_mode
+    src: default-cli.j2 
+    dest: ./build/{{ role_name|basename }}/{{ inventory_hostname }}-{{ role_name|basename }}.conf
 
 - name: Create Config Backup Directory
   connection: local
   tags: 
     - state
     - bak
-  file: path=./roles/cisco-hostname/config/ state=directory
+    - test
+    - tests
+  file: path=./archive/{{ role_name|basename }} state=directory
 
 - name: Take a Configuration Backup from Device
   connection: local
   tags: 
     - bak
     - state
+    - test
+    - tests
   ios_config:
     host: "{{ ansible_ssh_host }}"
     username: "{{ ansible_ssh_user }}"
@@ -43,13 +45,17 @@
   tags: 
     - state
     - bak
-  file: path=./roles/cisco-hostname/config/ state=directory
+    - test
+    - tests
+  file: path=./state/{{ role_name|basename }} state=directory
 
 - name: Get current State of the device
   connection: local 
   tags: 
     - bak
     - state
+    - test
+    - tests
   ignore_errors: yes
   ios_facts:
       host: "{{ ansible_ssh_host }}"
@@ -61,15 +67,19 @@
   tags:
     - bak
     - state
+    - test
+    - tests
   connection: local
   ignore_errors: yes
-  copy: content="{{ iosfacts_out | to_nice_json }}" dest=./state/{{inventory_hostname}}_iosfacts.json
+  copy: content="{{ iosfacts_out | to_nice_json }}" dest=./state/{{ role_name|basename }}/{{inventory_hostname}}_iosfacts.json
 
 - name: Check startup to running config and write to startup config
   connection: local
   tags: 
     - bak
     - state
+    - test
+    - tests
   ios_config:
     host: "{{ ansible_ssh_host }}"
     username: "{{ ansible_ssh_user }}"
@@ -78,14 +88,31 @@
     save_when: always
   ignore_errors: yes
 
+# Diff Generated Config to Running Config
+# Cisco IOS and NX-OS
+- name: Diff Running Config to Config Build
+  connection: local
+  tags:
+    - test
+    - diff
+    - tests-diff
+    - tests
+  ios_config:
+    host: "{{ ansible_ssh_host }}"
+    username: "{{ ansible_ssh_user }}"
+    password: "{{ ansible_ssh_password }}"
+    diff_against: intended
+    intended_config: "{{ lookup('file', './build/{{ role_name|basename }}/{{ inventory_hostname }}-{{ role_name }}.conf') }}"
 
 # Set Hostname on Device from Template
 - name: Deploy Switch Config Hostname on CLI
   connection: local
   tags:
-    - deploy 
+    - deploy
     - oam
     - cli
+    - deploy-oam-cli
+    - deploy-cli-oam
   ios_config:
       host: "{{ ansible_ssh_host }}"
       username: "{{ ansible_ssh_user }}"
