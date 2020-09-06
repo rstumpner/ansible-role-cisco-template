@@ -9,10 +9,11 @@ variables:
   ANSIBLE_FORCE_COLOR: 'true'
   GIT_SSL_NO_VERIFY: "1"
   ANSIBLE_HOST_KEY_CHECKING: 'false'
+image: ubuntu:18.04
 
 syntax-check:
   stage: validation
-  image: ubuntu:latest
+#  image: ubuntu:latest
 #  only:
 #    - review
 #  tags:
@@ -31,7 +32,7 @@ syntax-check:
 
 build-config:
   stage: build
-  image: ubuntu:latest
+#  image: ubuntu:latest
   artifacts:
     when: always
     paths:
@@ -52,7 +53,7 @@ build-config:
 
 testing-diff-checkmode:
   stage: testing
-  image: ubuntu:latest
+#  image: ubuntu:latest
   artifacts:
     when: always
     paths:
@@ -74,7 +75,7 @@ testing-diff-checkmode:
 
 testing-device:
   stage: testing
-  image: ubuntu:latest
+#  image: ubuntu:latest
   artifacts:
     when: always
     paths:
@@ -96,7 +97,7 @@ testing-device:
 
 deploy-cli:
   stage: deploy
-  image: ubuntu:latest
+#  image: ubuntu:latest
   artifacts:
     when: always
     paths:
