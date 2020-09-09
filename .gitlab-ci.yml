@@ -9,51 +9,38 @@ variables:
   ANSIBLE_FORCE_COLOR: 'true'
   GIT_SSL_NO_VERIFY: "1"
   ANSIBLE_HOST_KEY_CHECKING: 'false'
+# Docker Default Image for all Stages
 image: ubuntu:18.04
+
+# Before Script for all Stages
+before_script:
+  - apt-get update -qq
+  - apt install --no-install-recommends -y python-minimal software-properties-common git vim iputils-ping mtr dnsutils rsync tree python-pip
+  - apt-add-repository ppa:ansible/ansible
+  - apt update
+  - apt install -y ansible python-markupsafe python-ecdsa libyaml-0-2 python-jinja2 python-yaml python-paramiko python-httplib2 python-crypto sshpass
+  - pip install pysphere
+  - pip install pyvmomi
+  - ansible --version
 
 syntax-check:
   stage: validation
-#  image: ubuntu:latest
-#  only:
-#    - review
-#  tags:
-#    - test
-  before_script:
-    - apt-get update -qq
-    - apt install --no-install-recommends -y python-minimal software-properties-common git vim iputils-ping mtr dnsutils rsync tree python-pip
-    - apt-add-repository ppa:ansible/ansible
-    - apt update
-    - apt install -y ansible python-markupsafe python-ecdsa libyaml-0-2 python-jinja2 python-yaml python-paramiko python-httplib2 python-crypto sshpass
-    - pip install pysphere
-    - pip install pyvmomi
-    - ansible --version
   script:
     - 'ansible-playbook -i tests/ansible-docker/hosts tests/test.yml --syntax-check'
 
 build-config:
   stage: build
-#  image: ubuntu:latest
   artifacts:
     when: always
     paths:
       - config/
       - build/
       - state/
-  before_script:
-    - apt-get update -qq
-    - apt install --no-install-recommends -y python-minimal software-properties-common git vim iputils-ping mtr dnsutils rsync tree python-pip
-    - apt-add-repository ppa:ansible/ansible
-    - apt update
-    - apt install -y ansible python-markupsafe python-ecdsa libyaml-0-2 python-jinja2 python-yaml python-paramiko python-httplib2 python-crypto sshpass
-    - pip install pysphere
-    - pip install pyvmomi
-    - ansible --version
   script:
     - 'ansible-playbook -i tests/ansible-docker/hosts tests/test.yml --check --tags build'
 
 testing-diff-checkmode:
   stage: testing
-#  image: ubuntu:latest
   artifacts:
     when: always
     paths:
@@ -61,21 +48,11 @@ testing-diff-checkmode:
       - build/
       - state/
       - tests/
-  before_script:
-    - apt-get update -qq
-    - apt install --no-install-recommends -y python-minimal software-properties-common git vim iputils-ping mtr dnsutils rsync tree python-pip
-    - apt-add-repository ppa:ansible/ansible
-    - apt update
-    - apt install -y ansible python-markupsafe python-ecdsa libyaml-0-2 python-jinja2 python-yaml python-paramiko python-httplib2 python-crypto sshpass
-    - pip install pysphere
-    - pip install pyvmomi
-    - ansible --version
   script:
     - 'ansible-playbook -i tests/ansible-docker/hosts tests/test.yml --check --diff'
 
 testing-device:
   stage: testing
-#  image: ubuntu:latest
   artifacts:
     when: always
     paths:
@@ -83,21 +60,11 @@ testing-device:
       - build/
       - state/
       - tests/
-  before_script:
-    - apt-get update -qq
-    - apt install --no-install-recommends -y python-minimal software-properties-common git vim iputils-ping mtr dnsutils rsync tree python-pip
-    - apt-add-repository ppa:ansible/ansible
-    - apt update
-    - apt install -y ansible python-markupsafe python-ecdsa libyaml-0-2 python-jinja2 python-yaml python-paramiko python-httplib2 python-crypto sshpass
-    - pip install pysphere
-    - pip install pyvmomi
-    - ansible --version
   script:
     - 'ansible-playbook -i tests/ansible-docker/hosts tests/test.yml --tags tests'
 
 deploy-cli:
   stage: deploy
-#  image: ubuntu:latest
   artifacts:
     when: always
     paths:
@@ -105,14 +72,5 @@ deploy-cli:
       - build/
       - state/
       - tests/
-  before_script:
-    - apt-get update -qq
-    - apt install --no-install-recommends -y python-minimal software-properties-common git vim iputils-ping mtr dnsutils rsync tree python-pip
-    - apt-add-repository ppa:ansible/ansible
-    - apt update
-    - apt install -y ansible python-markupsafe python-ecdsa libyaml-0-2 python-jinja2 python-yaml python-paramiko python-httplib2 python-crypto sshpass
-    - pip install pysphere
-    - pip install pyvmomi
-    - ansible --version
   script:
     - ansible-playbook -i tests/ansible-docker/hosts tests/test.yml --tags deploy,cli
