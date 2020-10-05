@@ -39,7 +39,7 @@ build-config:
       - state/
       - archive/
   script:
-    - 'ansible-playbook -i tests/ansible-docker/hosts tests/test.yml --check --tags build'
+    - 'ansible-playbook -i tests/ansible-docker/hosts tests/test.yml --tags build'
 
 
 unit-test-config:
