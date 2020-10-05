@@ -2,7 +2,7 @@
 stages:
   - validation
   - build
-  - testing
+  - test
   - deploy
 
 variables:
@@ -21,6 +21,7 @@ before_script:
   - apt install -y ansible python-markupsafe python-ecdsa libyaml-0-2 python-jinja2 python-yaml python-paramiko python-httplib2 python-crypto sshpass
   - pip install pysphere
   - pip install pyvmomi
+  - pip install ciscoconfparse
   - ansible --version
 
 syntax-check:
@@ -39,8 +40,21 @@ build-config:
   script:
     - 'ansible-playbook -i tests/ansible-docker/hosts tests/test.yml --check --tags build'
 
+
+unit-test-config:
+  stage: test
+  artifacts:
+    when: always
+    paths: 
+      - "*/build/*"
+      - config/
+      - state/
+      - archive/
+  script:
+    - 'python tests/ciscoconfparse/cisco-cli-ut.py tests/build/ansible-role-cisco-template/localhost-ansible-role-cisco-template.conf'
+
 testing-diff-checkmode:
-  stage: testing
+  stage: test
   artifacts:
     when: always
     paths:
@@ -52,7 +66,7 @@ testing-diff-checkmode:
     - 'ansible-playbook -i tests/ansible-docker/hosts tests/test.yml --check --diff'
 
 testing-device:
-  stage: testing
+  stage: test
   artifacts:
     when: always
     paths:
