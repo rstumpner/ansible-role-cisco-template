@@ -34,9 +34,10 @@ build-config:
   artifacts:
     when: always
     paths:
+      - "*/build/*"
       - config/
-      - build/
       - state/
+      - archive/
   script:
     - 'ansible-playbook -i tests/ansible-docker/hosts tests/test.yml --check --tags build'
 
