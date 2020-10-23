@@ -21,6 +21,7 @@ before_script:
   - apt install -y ansible python-markupsafe python-ecdsa libyaml-0-2 python-jinja2 python-yaml python-paramiko python-httplib2 python-crypto sshpass
   - pip install pysphere
   - pip install pyvmomi
+  - pip install netaddr
   - pip install ciscoconfparse
   - ansible --version
 
