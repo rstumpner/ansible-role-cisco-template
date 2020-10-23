@@ -1,0 +1,147 @@
+! Gernated by Ansible Role {{ role_name|basename }}
+! Interfaces
+
+
+! L2 Access Ports
+! Switchport L2 Access with Vlan
+{% for interfaces , value in interfaces.iteritems() %}
+{% if value.switchport_mode is defined  %}
+{% if value.switchport_mode == "access"  %}
+interface {{ interfaces }}
+  {% if value.pport is defined or value.hostname is defined %}
+  description {{ value.description }} ({{ value.hostname }}) { {{ value.pport }} }
+  {% else %}
+  description {{ value.description }}
+  {% endif %}
+  switchport
+  switchport mode access
+  switchport access vlan {{ value.vlan_id }}
+  no shutdown
+!
+{% endif %}
+{% endif %}
+{% endfor %}
+
+! Trunk Ports with Native VLAN for WLAN APs
+! Switchport L2 Trunk with Native Vlan
+{% for interfaces , value in interfaces.iteritems() %}
+{% if value.switchport_mode is defined  %}
+{% if value.switchport_mode == "trunk"  %}
+{% if value.native_vlan is defined  %}
+interface {{ interfaces }}
+  {% if value.pport is defined or value.hostname is defined %}
+  description {{ value.description }} ({{ value.hostname }}) { {{ value.pport }} }
+  {% else %}
+  description {{ value.description }}
+  {% endif %}
+  switchport
+  switchport mode trunk
+  switchport trunk native vlan {{ value.native_vlan }}
+  no shutdown
+!
+{% endif %}
+{% endif %}
+{% endif %}
+{% endfor %}
+
+! L2 Trunk Ports 
+! Switchport L2 Trunk
+{% for interfaces , value in interfaces.iteritems() %}
+{% if value.switchport_mode is defined  %}
+{% if value.switchport_mode == "trunk"  %}
+{% if value.native_vlan is not defined  %}
+interface {{ interfaces }}
+  {% if value.pport is defined or value.hostname is defined %}
+  description {{ value.description }} ({{ value.hostname }}) { {{ value.pport }} }
+  {% else %}
+  description {{ value.description }}
+  {% endif %}
+  switchport
+  switchport mode trunk
+  no shutdown
+!
+{% endif %}
+{% endif %}
+{% endif %}
+{% endfor %}
+
+! L3 Routed Ports 
+! Routed Port L3
+{% for interfaces , value in interfaces.iteritems() %}
+{% if value.switchport_mode is defined  %}
+{% if value.switchport_mode == "routed"  %}
+interface {{ interfaces }}
+  {% if value.pport is defined or value.hostname is defined %}
+  description {{ value.description }} ({{ value.hostname }}) { {{ value.pport }} }
+  {% elif value.description is defined %}
+  description {{ value.description }}
+  {% else %}
+  description none
+  {% endif %}
+  no switchport
+  {% if value.vrf is defined  %}
+  {% if value.vrf == true %}
+  {% if value.description is defined %}
+  vrf forwarding {{ value.description }}
+  {% else %}
+  ! No VRF Name Route in Global
+  {% endif %}
+  {% else %}
+  vrf forwarding {{ value.vrf }}
+  {% endif %}
+  {% endif %}
+  {% if value.ipv4 is defined %}
+  ip address {{ value.ipv4 | ipaddr('address') }} {{ value.ipv4 | ipaddr('netmask') }}
+  {% endif %}
+  {% if value.ipv6 is defined %}
+  ipv6 address {{ value.ipv6 | ipaddr('address') }}/{{ value.ipv6 | ipaddr('net') }}
+  {% endif %}
+  {% if value.operstatus is not defined %}
+  no shutdown
+  {% elif value.operstatus == "down" %}
+  shutdown
+  {% else %}
+  no shutdown
+  {% endif %}
+!
+{% endif %}
+{% endif %}
+{% endfor %}
+
+
+! Access config
+! OLD Model
+{% for interfaces , value in interfaces.iteritems() %}
+{% if value.config is defined  %}
+{% if value.config == "access"  %}
+interface {{ interfaces }}
+  {% if value.pport is defined or value.hostname is defined %}
+  description {{ value.desc }} ({{ value.hostname }}) { {{ value.pport }} }
+  {% else %}
+  description {{ value.desc }}
+  {% endif %}
+  switchport
+  switchport mode access
+  switchport access vlan {{ value.vlanid }}
+  {% if value.macsticky is number  %}
+  switchport port-security maximum {{ value.macsticky }}
+  switchport port-security aging time 5
+  switchport port-security aging type inactivity
+  {% endif %}
+  storm-control broadcast level 1.00
+  spanning-tree portfast
+  {% if value.portchannel is defined %}
+  channel-group {{ value.portchannel }} mode active
+  {% endif %}
+  no shutdown
+!
+{% if value.portchannel is defined %}
+interface Po {{ value.portchannel }}
+  description {{ value.desc }}
+  switchport
+  switchport mode trunk
+  vpc {{ value.portchannel }}
+{% endif %}
+{% endif %}
+{% endif %}
+{% endfor %}
