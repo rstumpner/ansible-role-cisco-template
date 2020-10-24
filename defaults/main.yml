@@ -7,3 +7,99 @@ ansible_python_interpreter: /usr/bin/python3
 #ansible_ssh_host: "localhost"
 #ansible_ssh_user: admin
 #ansible_ssh_password: admin
+
+
+
+# Interface Variables to be (derived from Cisco pyats Datamodel / Openconfig)
+interfaces:
+# IOS XE TenGigabitEthernet Switchport L2 Trunk
+  TenGigabitEthernet0/0:
+      description: "Core: vlanid / name (Raumnummer/Hostname) {Patchpanelbeschriftung} [1Gbit]"
+      switchport_mode: trunk
+# IOS XE GigabitEthernet Switchport L2 Trunk with native VLAN TAG
+  GigabitEthernet4/0/45:
+      description: "Cust: str-ca-wlan-ap (5233/str-fh3-3og-0d9e40) {33A04M16} [1Gbit]"
+      switchport_mode: trunk
+      native_vlan: 41
+ # IOS XE GigabitEthernet Switchport L2 Access with Vlan     
+  GigabitEthernet0/0:
+      description: "Cust: vlanid / name (Raumnummer/Hostname) {Patchpanelbeschriftung} [1Gbit]"
+      switchport_mode: access
+      vlan_id: 10
+# NXOS Ethernet Switchport L2 Trunk
+  Ethernet0/0:
+      description: "Cust: vlanid / name (Raumnummer/Hostname) {Patchpanelbeschriftung} [1Gbit]"
+      switchport_mode: trunk
+# IOS XE GitgabitEthernet L3 Interfce
+  GigabitEthernet0/1:
+      switchport_mode: routed
+      ipv4: 10.10.10.1/24
+      ipv6: '2001:0db8::1/64'
+      type: ethernet
+# IOS XE GitgabitEthernet L3 Interfce (3 digits)
+  GigabitEthernet1/0/1:
+      switchport_mode: routed
+      ipv4: 10.10.10.1/24
+      ipv6: '2001:0db8::1/64'
+      type: ethernet
+# NXOS Ethernet L3 Interfce (2 digits)
+  Ethernet0/1:
+      switchport_mode: routed
+      ipv4: 10.10.10.2/24
+      ipv6: '2001:0db8::1/64'
+      type: ethernet
+# IOS XE VLAN L3 Interfce
+  vlan10:
+      switchport_mode: routed
+      vlan_id: 10
+      ipv4: 10.10.10.1/24
+      ipv6: '2001:0db8::10/64'
+      type: "Ethernet SVI"
+# IOS XE Loopback L3 Interfce
+  Loopback0:
+      ipv4: 192.168.0.1/32
+      ipv6: '2001:0db8::1011/128'
+      type: loopback
+# NXOS Ethernet L3 Interfce VRF is named
+  Ethernet0/2:
+      switchport_mode: routed
+      vrf: "vrf-example"
+      ipv4: 10.10.10.2/24
+      ipv6: '2001:0db8::1/64'
+      type: ethernet
+# IOS XE VLAN L3 Interfce VRF is true vrf is description (default = default)
+  vlan11:
+      switchport_mode: routed
+      vlan_id: 10
+      vrf: true
+      ipv4: 10.10.10.1/24
+      ipv6: '2001:0db8::10/64'
+      type: "Ethernet SVI"
+# IOS XE Loopback L3 Interfce VRF is true vrf is description is named
+  Loopback1:
+      description: "std-example"
+      switchport_mode: routed
+      vrf: true
+      ipv4: 192.168.0.1/32
+      ipv6: '2001:0db8::1011/128'
+      type: loopback
+  TenGigabitEthernet5/1:
+    desc: "Transit: wel-rz-vsscore-c6880-4010 {SNXXX/XX-P1/2} [1Gbit] (wel-rz-vsscore-c6880-4010)"
+    config: trunk
+  TenGigabitEthernet5/2:
+    desc: "Transit: wel-rz-vsscore-c6880-4010 {SNXXX/XX-P1/2} [1Gbit] (wel-rz-vsscore-c6880-4010)"
+    config: trunk
+  GigabitEthernet1/14:
+    desc: "Cust: wel-ca-inf-wlanap (wel-c/WEL-C-1OG-105) {C-1OG-05/AP1}"
+    config: desc
+    vlanid: 116
+    native: true
+  GigabitEthernet1/45:
+    desc: "Cust: wel-ca-inf-appletv (C_HS-106/WEL-C-1OG-006) {C/O1-006/02}"
+    config: access
+    vlanid: 196
+  GigabitEthernet1/47:
+    desc: "Cust: wel-ca-inf-wlanap (wel-c/WEL-C-1OG-HS-106-1) {C-1OG-06/03}"
+    config: desc
+    vlanid: 116
+    native: true
