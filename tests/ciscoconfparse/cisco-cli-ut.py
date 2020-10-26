@@ -29,7 +29,7 @@ def start():
     teststotal = teststotal + testhostname()
     teststotal = teststotal + testinterfaces()
 #    print(teststotal)
-    print("TOTAL:" + str(teststotal) + "\n")
+    print("TOTAL " + str(teststotal) + " " + str(teststotal) + " " + str(teststotal)+"%")
     
 
 def main():
