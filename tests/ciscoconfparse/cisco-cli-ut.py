@@ -29,7 +29,7 @@ def start():
         {'name': 'TOTAL','testcounter': testhostname()+testinterfaces(),'miss': 0 ,'coverage':'100%' },
     ]
 
-    j2_template = Template(" {{ unittests.name }} {{ unittests.testcounter }} {{ unittests.miss }} {{ unittests.coverage }}")
+    j2_template = Template("{{ unittests.name }} {{ unittests.testcounter }} {{ unittests.miss }} {{ unittests.coverage }}")
     ut_report = j2_template.render(unittests=unittests[0])
     print(ut_report)
     
