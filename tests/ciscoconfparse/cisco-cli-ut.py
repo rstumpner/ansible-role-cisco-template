@@ -4,7 +4,7 @@ import sys
 from sys import argv
 import argparse
 from ciscoconfparse import CiscoConfParse
-
+from jinja2 import Template
 
 def testhostname():
     tests = 0
@@ -25,11 +25,13 @@ def start():
     global parse
     # Reading of the Cisco Config file
     parse = CiscoConfParse(input_file, syntax='ios')
-    teststotal = 0
-    teststotal = teststotal + testhostname()
-    teststotal = teststotal + testinterfaces()
-#    print(teststotal)
-    print("TOTAL " + str(teststotal) + " " + str(teststotal) + " " + str(teststotal)+"%")
+    unittests = [
+        {'name': 'TOTAL','miss': testhostname()+testinterfaces() ,'coverage':'100%' },
+    ]
+
+    j2_template = Template(" {{ unittests.name }} {{ unittests.miss }} {{ unittests.coverage }}")
+    ut_report = j2_template.render(unittests=unittests[0])
+    print(ut_report)
     
 
 def main():
