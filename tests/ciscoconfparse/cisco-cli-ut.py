@@ -23,9 +23,8 @@ def testinterfaces():
 def start():
     script, input_file = argv
     global parse
-    # Lesen der Cisco Config Datei
+    # Reading of the Cisco Config file
     parse = CiscoConfParse(input_file, syntax='ios')
-    # Auswerten der Tests für einen Report
     teststotal = 0
     teststotal = teststotal + testhostname()
     teststotal = teststotal + testinterfaces()
