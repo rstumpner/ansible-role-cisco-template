@@ -26,10 +26,10 @@ def start():
     # Reading of the Cisco Config file
     parse = CiscoConfParse(input_file, syntax='ios')
     unittests = [
-        {'name': 'TOTAL','miss': testhostname()+testinterfaces() ,'coverage':'100%' },
+        {'name': 'TOTAL','testcounter': testhostname()+testinterfaces(),'miss': 0 ,'coverage':'100%' },
     ]
 
-    j2_template = Template(" {{ unittests.name }} {{ unittests.miss }} {{ unittests.coverage }}")
+    j2_template = Template(" {{ unittests.name }} {{ unittests.testcounter }} {{ unittests.miss }} {{ unittests.coverage }}")
     ut_report = j2_template.render(unittests=unittests[0])
     print(ut_report)
     
