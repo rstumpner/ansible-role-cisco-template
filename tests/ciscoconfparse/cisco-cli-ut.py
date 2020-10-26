@@ -28,7 +28,7 @@ def start():
 
     test_hostname()
     test_interfaces()
-    print("TOTAL" + tests_total "\n")
+    print("TOTAL" + tests_total + "\n")
     return;
 
 def main():
@@ -37,5 +37,5 @@ def main():
         start()
     return;
 
-if __name__ = "__main__":
-main()
+if __name__ == "__main__":
+    main()
