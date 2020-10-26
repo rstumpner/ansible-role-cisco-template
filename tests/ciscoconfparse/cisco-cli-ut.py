@@ -5,11 +5,11 @@ import argparse
 from ciscoconfparse import CiscoConfParse
 
 
-def test_hostname()
+def test_hostname():
     for hostname_obj in parse.find_objects('^hostname'):
         print("hostname: " + hostname_obj.text)
 
-def test_interfaces()
+def test_interfaces():
     for intf_obj in parse.find_objects('^interface'):
         print("Interfaces: " + intf_obj.text + "\n" )
 
