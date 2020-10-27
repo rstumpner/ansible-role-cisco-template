@@ -1,6 +1,7 @@
 ! Gernated by Ansible Role {{ role_name|basename }}
 ! VRFs
 
+! Native VRFs
 {%for vrfs , value in vrfs.iteritems()%}
 vrf definition {{ vrfs }}
  {%if value.route_distinguisher is defined%}
@@ -25,4 +26,36 @@ vrf definition {{ vrfs }}
   maximum routes 150 80
  exit-address-family
 
+{%endfor%}
+
+! VRFs from the Interface Configuration
+{% for interfaces , value in interfaces.iteritems() %}
+{% if value.switchport_mode is defined  %}
+{% if value.switchport_mode == "routed"  %}
+{% if value.vrf is defined  %}
+{% if value.vrf == "true"  %}
+
+vrf definition {{ value.description }}
+ {%if interfaces is defined%}
+ rd {{ switch_id }}:{{ interface }}
+ {%endif%}
+ {%if interface is defined %}
+ route-target export {{ switch_id }}:{{ interface }}
+ {%endif%}
+ {%if value.parentvrf is defined %}
+ route-target import {{ value.parentvrf }}
+ {%endif%}
+ !
+ address-family ipv4
+  maximum routes 150 80
+ exit-address-family
+ !
+ address-family ipv6
+  maximum routes 150 80
+ exit-address-family
+
+{%endif%}
+{%endif%}
+{%endif%}
+{%endif%}
 {%endfor%}
