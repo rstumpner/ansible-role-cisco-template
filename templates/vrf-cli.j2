@@ -39,10 +39,10 @@ vrf definition {{ vrfs }}
 
 vrf definition {{ value.description }}
  {%if interfaces is defined%}
- rd {{ switch_id }}:{{ interface }}
+ rd {{ switch_id }}:{{ interfaces }}
  {%endif%}
- {%if interface is defined %}
- route-target export {{ switch_id }}:{{ interface }}
+ {%if interfaces is defined %}
+ route-target export {{ switch_id }}:{{ interfaces }}
  {%endif%}
  {%if value.parentvrf is defined %}
  route-target import {{ value.parentvrf }}
