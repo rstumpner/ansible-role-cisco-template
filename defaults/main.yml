@@ -7,7 +7,7 @@ ansible_python_interpreter: /usr/bin/python3
 #ansible_ssh_host: "localhost"
 #ansible_ssh_user: admin
 #ansible_ssh_password: admin
-
+switch_id: 1000
 
 
 # Interface Variables to be (derived from Cisco pyats Datamodel / Openconfig)
