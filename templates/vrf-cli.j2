@@ -4,11 +4,11 @@
 {%for vrfs , value in vrfs.iteritems()%}
 vrf definition {{ vrfs }}
  rd {{ value.route_distinguisher }}
- {% for rt_export, value in value.route_targets_export %}
- route-target export {{ rt_export.value }}
+ {% for rt_export in value.route_targets_export %}
+ route-target export {{ rt_export }}
  {%endfor%}
- {%for rt_import, value in value.route_targets_import %}
- route-target import {{ rt_import.value }}
+ {%for rt_import in value.route_targets_import %}
+ route-target import {{ rt_import }}
  {%endfor%}
  !
  address-family ipv4
