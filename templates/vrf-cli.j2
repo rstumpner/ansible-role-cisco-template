@@ -35,6 +35,8 @@ vrf definition {{ vrfs }}
 {% if value.vrf is defined  %}
 {% if value.vrf == true  %}
 
+{% if value.description is defined  %}
+
 vrf definition {{ value.description }}
  {%if interfaces is defined%}
  rd {{ switch_id }}:{{ interface }}
@@ -54,6 +56,7 @@ vrf definition {{ value.description }}
   maximum routes 150 80
  exit-address-family
 
+{%endif%}
 {%endif%}
 {%endif%}
 {%endif%}
