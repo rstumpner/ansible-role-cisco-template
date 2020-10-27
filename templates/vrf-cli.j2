@@ -4,10 +4,10 @@
 {%for vrfs , value in vrfs.iteritems()%}
 vrf definition {{ vrfs }}
  rd {{ value.route_distinguisher }}
- {% for rt_export, value in vrfs.route_targets_export.iteritems() %}
+ {% for rt_export, value in value.route_targets_export.iteritems() %}
  route-target export {{ rt_export.value }}
  {%endfor%}
- {%for rt_import, value in vrfs.route_targets_import.iteritems() %}
+ {%for rt_import, value in value.route_targets_import.iteritems() %}
  route-target import {{ rt_import.value }}
  {%endfor%}
  !
