@@ -3,7 +3,9 @@
 
 {%for vrfs , value in vrfs.iteritems()%}
 vrf definition {{ vrfs }}
+ {%if value.route_distinguisher is defined%}
  rd {{ value.route_distinguisher }}
+ {%endif%}
  {%if value.route_targets_export is defined %}
  {% for rt_export in value.route_targets_export %}
  route-target export {{ rt_export }}
