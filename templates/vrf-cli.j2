@@ -1,0 +1,22 @@
+! Gernated by Ansible Role {{ role_name|basename }}
+! VRFs
+
+{%for vrfs , value in vrfs.iteritems()%}
+vrf definition {{ vrfs }}
+ rd {{ value.route_distinguisher }}
+ {% for rt_export, value in vrfs.route_targets_export.iteritems() %}
+ route-target export {{ rt_export.value }}
+ {%endfor%}
+ {%for rt_import, value in vrfs.route_targets_import.iteritems() %}
+ route-target import {{ rt_import.value }}
+ {%endfor%}
+ !
+ address-family ipv4
+  maximum routes 150 80
+ exit-address-family
+ !
+ address-family ipv6
+  maximum routes 150 80
+ exit-address-family
+
+{%endfor%}

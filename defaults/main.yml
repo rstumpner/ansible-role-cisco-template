@@ -103,3 +103,19 @@ interfaces:
     config: desc
     vlanid: 116
     native: true
+vrfs:
+  vrf-name:
+    description: "VRF Description for vrf-name"
+    route_distinguisher: "1000:100"
+    route_targets_export:
+      - "1000:100"
+    route_targets_import:
+      - "1000:2100"
+  vrf-name-1:
+    description: "VRF Description for vrf-name-1"
+    route_distinguisher: "1000:200"
+    route_targets_export:
+      - "1000:200"
+    route_targets_import:
+      - "1000:2200"
+      
