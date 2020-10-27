@@ -104,18 +104,27 @@ interfaces:
     vlanid: 116
     native: true
 vrfs:
-  vrf-name:
-    description: "VRF Description for vrf-name"
+  # Basic VRF without Route Distitinguisher
+  vrf-basic:
+    description: "VRF Description for vrf-basic"
+#    route_distinguisher: "1000:100"
+#    route_targets_export:
+#      - "1000:100"
+#    route_targets_import:
+#      - "1000:2100"
+  # Basic VRF with Route Distitinguisher
+  vrf-basic-with-rd:
+    description: "VRF Description for basic vrf with route Distinguisher"
     route_distinguisher: "1000:100"
-    route_targets_export:
-      - "1000:100"
-    route_targets_import:
-      - "1000:2100"
-  vrf-name-1:
-    description: "VRF Description for vrf-name-1"
+#    route_targets_export:
+#      - "1000:200"
+#    route_targets_import:
+#      - "1000:2200"
+  # VRF with Route Distitinguisher and Route Targets
+  vrf-with-rd-rt:
+    description: "VRF Description for vrf with route Distinguisher and Route Targets"
     route_distinguisher: "1000:200"
     route_targets_export:
       - "1000:200"
     route_targets_import:
       - "1000:2200"
-      
