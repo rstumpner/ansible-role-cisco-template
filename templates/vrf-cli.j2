@@ -33,7 +33,7 @@ vrf definition {{ vrfs }}
 {% if value.switchport_mode is defined  %}
 {% if value.switchport_mode == "routed"  %}
 {% if value.vrf is defined  %}
-{% if value.vrf == "true"  %}
+{% if value.vrf == true  %}
 
 vrf definition {{ value.description }}
  {%if interfaces is defined%}
