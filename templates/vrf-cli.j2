@@ -4,12 +4,16 @@
 {%for vrfs , value in vrfs.iteritems()%}
 vrf definition {{ vrfs }}
  rd {{ value.route_distinguisher }}
+ {%if value.route_targets_export is defined %}
  {% for rt_export in value.route_targets_export %}
  route-target export {{ rt_export }}
  {%endfor%}
+ {%endif%}
+ {%if value.route_targets_import is defined %}
  {%for rt_import in value.route_targets_import %}
  route-target import {{ rt_import }}
  {%endfor%}
+ {%endif%}
  !
  address-family ipv4
   maximum routes 150 80
