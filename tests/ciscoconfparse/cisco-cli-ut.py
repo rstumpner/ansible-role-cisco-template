@@ -20,13 +20,20 @@ def testinterfaces():
         tests += 1
     return tests
 
+def testvrf():
+    tests = 0
+    for vrf_obj in parse.find_objects('^vrf definition'):
+        print("VRFs: " + vrf_obj.text + "\n" )
+        tests += 1
+    return tests
+
 def start():
     script, input_file = argv
     global parse
     # Reading of the Cisco Config file
     parse = CiscoConfParse(input_file, syntax='ios')
     unittests = [
-        {'name': 'TOTAL','testcounter': testhostname()+testinterfaces(),'miss': 0 ,'coverage':'100%' },
+        {'name': 'TOTAL','testcounter': testhostname()+testinterfaces()+testvrf(),'miss': 0 ,'coverage':'100%' },
     ]
 
     j2_template = Template("{{ unittests.name }} {{ unittests.testcounter }} {{ unittests.miss }} {{ unittests.coverage }}")

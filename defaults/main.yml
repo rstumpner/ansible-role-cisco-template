@@ -7,7 +7,7 @@ ansible_python_interpreter: /usr/bin/python3
 #ansible_ssh_host: "localhost"
 #ansible_ssh_user: admin
 #ansible_ssh_password: admin
-
+switch_id: 1000
 
 
 # Interface Variables to be (derived from Cisco pyats Datamodel / Openconfig)
@@ -70,9 +70,27 @@ interfaces:
 # IOS XE VLAN L3 Interfce VRF is true vrf is description (default = default)
   vlan11:
       switchport_mode: routed
-      vlan_id: 10
+      vlan_id: 11
       vrf: true
-      ipv4: 10.10.10.1/24
+      ipv4: 10.10.11.1/24
+      ipv6: '2001:0db8::10/64'
+      type: "Ethernet SVI"
+# IOS XE VLAN L3 Interfce VRF is true vrf is description has vrf_parent (default = default)
+  vlan12:
+      description: "vrf-l3-vlan-true-w-desc"
+      switchport_mode: routed
+      vlan_id: 12
+      vrf: true
+      vrf_parent: "1000:100"
+      ipv4: 10.10.12.1/24
+      ipv6: '2001:0db8::10/64'
+      type: "Ethernet SVI"
+# IOS XE VLAN L3 Interfce VRF is named description is none
+  vlan13:
+      switchport_mode: routed
+      vlan_id: 13
+      vrf: "vrf-l3-vlan-named"
+      ipv4: 10.10.13.1/24
       ipv6: '2001:0db8::10/64'
       type: "Ethernet SVI"
 # IOS XE Loopback L3 Interfce VRF is true vrf is description is named
@@ -103,3 +121,28 @@ interfaces:
     config: desc
     vlanid: 116
     native: true
+vrfs:
+  # Basic VRF without Route Distitinguisher
+  vrf-basic:
+    description: "VRF Description for vrf-basic"
+#    route_distinguisher: "1000:100"
+#    route_targets_export:
+#      - "1000:100"
+#    route_targets_import:
+#      - "1000:2100"
+  # Basic VRF with Route Distitinguisher
+  vrf-basic-with-rd:
+    description: "VRF Description for basic vrf with route Distinguisher"
+    route_distinguisher: "1000:100"
+#    route_targets_export:
+#      - "1000:200"
+#    route_targets_import:
+#      - "1000:2200"
+  # VRF with Route Distitinguisher and Route Targets
+  vrf-with-rd-rt:
+    description: "VRF Description for vrf with route Distinguisher and Route Targets"
+    route_distinguisher: "1000:200"
+    route_targets_export:
+      - "1000:200"
+    route_targets_import:
+      - "1000:2200"

@@ -1,0 +1,64 @@
+! Gernated by Ansible Role {{ role_name|basename }}
+! VRFs
+
+! Native VRFs
+{%for vrfs , value in vrfs.iteritems()%}
+vrf definition {{ vrfs }}
+ {%if value.route_distinguisher is defined%}
+ rd {{ value.route_distinguisher }}
+ {%endif%}
+ {%if value.route_targets_export is defined %}
+ {% for rt_export in value.route_targets_export %}
+ route-target export {{ rt_export }}
+ {%endfor%}
+ {%endif%}
+ {%if value.route_targets_import is defined %}
+ {%for rt_import in value.route_targets_import %}
+ route-target import {{ rt_import }}
+ {%endfor%}
+ {%endif%}
+ !
+ address-family ipv4
+  maximum routes 150 80
+ exit-address-family
+ !
+ address-family ipv6
+  maximum routes 150 80
+ exit-address-family
+
+{%endfor%}
+
+! VRFs from the Interface Configuration
+{% for interfaces , value in interfaces.iteritems() %}
+{% if value.switchport_mode is defined  %}
+{% if value.switchport_mode == "routed"  %}
+{% if value.vrf is defined  %}
+{% if value.vrf == true  %}
+
+{% if value.description is defined  %}
+
+vrf definition {{ value.description }}
+ {%if interfaces is defined%}
+ rd {{ switch_id }}:{{ interfaces | regex_replace('([A-Za-z])+(\d+$)','\\2') }}
+ {%endif%}
+ {%if interfaces is defined and switch_id is defined%}
+ route-target export {{ switch_id }}:{{ interfaces | regex_replace('([A-Za-z])+(\d+$)','\\2') }}
+ {%endif%}
+ {%if value.vrf_parent is defined %}
+ route-target import {{ value.vrf_parent }}
+ {%endif%}
+ !
+ address-family ipv4
+  maximum routes 150 80
+ exit-address-family
+ !
+ address-family ipv6
+  maximum routes 150 80
+ exit-address-family
+
+{%endif%}
+{%endif%}
+{%endif%}
+{%endif%}
+{%endif%}
+{%endfor%}
