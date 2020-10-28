@@ -70,9 +70,27 @@ interfaces:
 # IOS XE VLAN L3 Interfce VRF is true vrf is description (default = default)
   vlan11:
       switchport_mode: routed
-      vlan_id: 10
+      vlan_id: 11
       vrf: true
-      ipv4: 10.10.10.1/24
+      ipv4: 10.10.11.1/24
+      ipv6: '2001:0db8::10/64'
+      type: "Ethernet SVI"
+# IOS XE VLAN L3 Interfce VRF is true vrf is description has vrf_parent (default = default)
+  vlan12:
+      description: "vrf-l3-vlan-true-w-desc"
+      switchport_mode: routed
+      vlan_id: 12
+      vrf: true
+      vrf_parent: "1000:100"
+      ipv4: 10.10.12.1/24
+      ipv6: '2001:0db8::10/64'
+      type: "Ethernet SVI"
+# IOS XE VLAN L3 Interfce VRF is named description is none
+  vlan13:
+      switchport_mode: routed
+      vlan_id: 13
+      vrf: "vrf-l3-vlan-named"
+      ipv4: 10.10.13.1/24
       ipv6: '2001:0db8::10/64'
       type: "Ethernet SVI"
 # IOS XE Loopback L3 Interfce VRF is true vrf is description is named

@@ -41,11 +41,11 @@ vrf definition {{ value.description }}
  {%if interfaces is defined%}
  rd {{ switch_id }}:{{ interfaces }}
  {%endif%}
- {%if interfaces is defined %}
+ {%if interfaces is defined and switch_id is defined%}
  route-target export {{ switch_id }}:{{ interfaces }}
  {%endif%}
- {%if value.parentvrf is defined %}
- route-target import {{ value.parentvrf }}
+ {%if value.vrf_parent is defined %}
+ route-target import {{ value.vrf_parent }}
  {%endif%}
  !
  address-family ipv4
