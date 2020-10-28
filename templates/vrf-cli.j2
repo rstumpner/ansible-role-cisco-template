@@ -39,7 +39,7 @@ vrf definition {{ vrfs }}
 
 vrf definition {{ value.description }}
  {%if interfaces is defined%}
- rd {{ switch_id }}:{{ interfaces | regex_replace('\d+$','\\1') }}
+ rd {{ switch_id }}:{{ interfaces | regex_replace('([A-Za-z])+(\d+$)','\\2') }}
  {%endif%}
  {%if interfaces is defined and switch_id is defined%}
  route-target export {{ switch_id }}:{{ interfaces | regex_replace('([A-Za-z])+(\d+$)','\\2') }}
