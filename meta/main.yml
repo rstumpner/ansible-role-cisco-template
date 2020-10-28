@@ -3,7 +3,7 @@ dependencies: []
 
 galaxy_info:
   author: roland@stumpner.at
-  description: Cisco IOS Configuration Build for Hostnames
+  description: Cisco IOS Configuration Build Template
   company: ""
   license: "license (BSD, MIT)"
   min_ansible_version: 2.4
