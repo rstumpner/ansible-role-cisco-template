@@ -3,6 +3,7 @@
 # inventory_hostname: localhost
 
 ansible_python_interpreter: /usr/bin/python3
+build_time: "{{ ansible_date_time.iso8601_micro |default('1970') }}"
 #inventory_hostname: "localhost"
 #ansible_ssh_host: "localhost"
 #ansible_ssh_user: admin
