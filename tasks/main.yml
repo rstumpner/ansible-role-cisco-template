@@ -9,7 +9,7 @@
 
 - name: Build Cisco Configuration CLI from Template
   vars:
-    build_time: "{{ ansible_date_time.iso8601_micro | default('1970')}}"
+    build_time: "{{ ansible_date_time.iso8601_micro |default('1970') }}"
   delegate_to: localhost
   tags: 
     - build
