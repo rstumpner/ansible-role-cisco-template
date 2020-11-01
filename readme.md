@@ -13,8 +13,8 @@ If you want to do some test on your local machine install a Gitlab Runner there 
 
 
 ## Using this Role:
-Drive to Ansible Role Directory:
-    - git clone https://gitlab.com/rstumpner/ansible-role-cisco-template.git
+Drive to the Ansible Role Directory:
+    * git clone https://gitlab.com/rstumpner/ansible-role-cisco-template.git
 
 Activate this Role in a Playbook:
 
@@ -25,7 +25,7 @@ Example:
   roles:
      - ansible-role-cisco-template
 ```
-For some example configurations have a look at the main.yml in the folder defaults (https://gitlab.com/rstumpner/ansible-role-cisco-template/-/blob/master/defaults/main.yml) in this repository.
+For some example configurations have a look at the main.yml file in the defaults folder (https://gitlab.com/rstumpner/ansible-role-cisco-template/-/blob/master/defaults/main.yml) in this repository.
 
 ## Features:
 - Hostname Configuration
@@ -69,7 +69,7 @@ Ansible Tags:
  - Cisco IOS-XE
 
 ## Known Issues
-Just have a look at this Repository.
+Just have a look at this Repository with the tag fixes.
 
 https://gitlab.com/rstumpner/ansible-role-cisco-template/-/issues
 
