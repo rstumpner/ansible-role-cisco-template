@@ -9,7 +9,7 @@ This is a Ansible Template Role for generating Cisco Configuration and Tests its
 ## Installation:
 
 For the first steps there is no Installation needed just clone it to your Gitlab ( https://gitlab.com ) repository and the Gitlab Runner should work.
-If you want to do some test on your local machine install a Gitlab Runner there or Install Ansible (pip install ansible) and Copy & Paste the CI/CD Stages from the gitlab-ci.yml
+If you want to do some test on your local machine install a Gitlab Runner there or Install Ansible (pip install ansible) and Copy & Paste the CI/CD Stages from the gitlab-ci.yml file.
 
 
 ## Using this Role:
@@ -33,11 +33,11 @@ For some example configurations have a look at the main.yml in the folder defaul
 - VRF Configuration
 
 ## CI/CD Stages
-A short overview of the Implemented Stages in the CI/CD Pipeline.
+A short overview of the implemented Stages in the CI/CD Pipeline.
 
 #### Validate
 
-There should be the Tasks to validate the imput sources YAML files for example. Actually its a simple Ansible syntaxcheck
+There should be the tasks to validate the imput sources YAML files for example. Actually its a simple Ansible syntaxcheck.
 
 #### Build
 All Tasks for building the configurations (cli/netconf/restconf) will be executed and saved as artifact.
@@ -74,7 +74,7 @@ Just have a look at this Repository.
 https://gitlab.com/rstumpner/ansible-role-cisco-template/-/issues
 
 ## How to Contribute
-Just open up an issue or get in contact. Actually it is under havy development and there are many ideas to contribute to this project.
+Just open up an issue or get in contact via email. Actually it is under havy development and there are many ideas to contribute to this project. 
 
 ## License:
     MIT / BSD
