@@ -9,7 +9,7 @@ variables:
   ANSIBLE_FORCE_COLOR: 'true'
   GIT_SSL_NO_VERIFY: "1"
   ANSIBLE_HOST_KEY_CHECKING: 'false'
-  ANSIBLE_STDOUT_CALLBACK: 'debug'
+  ANSIBLE_STDOUT_CALLBACK: 'json'
   ANSIBLE_LOG_PATH: 'tests/state/ansible-play.log'
 # Docker Default Image for all Stages
 image: ubuntu:18.04
