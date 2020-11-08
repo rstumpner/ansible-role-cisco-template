@@ -17,7 +17,7 @@ image: ubuntu:18.04
 # Before Script for all Stages
 before_script:
   - apt-get update -qq
-  - apt install --no-install-recommends -y python-minimal software-properties-common git vim iputils-ping mtr dnsutils rsync tree python-pip
+  - apt install --no-install-recommends -y python-minimal software-properties-common git vim iputils-ping mtr dnsutils rsync tree python-pip jq
   - apt-add-repository ppa:ansible/ansible
   - apt update
   - apt install -y ansible python-markupsafe python-ecdsa libyaml-0-2 python-jinja2 python-yaml python-paramiko python-httplib2 python-crypto sshpass
@@ -44,6 +44,7 @@ build-config:
       - "*/archive/*"
   script:
     - 'ansible-playbook -i tests/ansible-docker/hosts tests/test.yml --tags build'
+    - printf "TOTAL $(cat ansible-play.log | jq .stats.localhost.ok)  $(cat ansible-play.log | jq .stats.localhost.changed) 100"
 
 
 unit-test-config:
