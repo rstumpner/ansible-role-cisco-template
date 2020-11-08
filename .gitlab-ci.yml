@@ -10,7 +10,7 @@ variables:
   GIT_SSL_NO_VERIFY: "1"
   ANSIBLE_HOST_KEY_CHECKING: 'false'
   ANSIBLE_STDOUT_CALLBACK: 'debug'
-  ANSIBLE_LOG_PATH: 'state/ansible-play.log'
+  ANSIBLE_LOG_PATH: 'tests/state/ansible-play.log'
 # Docker Default Image for all Stages
 image: ubuntu:18.04
 
@@ -25,6 +25,7 @@ before_script:
   - pip install pyvmomi
   - pip install netaddr
   - pip install ciscoconfparse
+  - mkdir tests/state
   - ansible --version
 
 syntax-check:
