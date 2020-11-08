@@ -39,9 +39,9 @@ build-config:
     when: always
     paths:
       - "*/build/*"
-      - config/
-      - state/
-      - archive/
+      - "*/config/*"
+      - "*/state/*"
+      - "*/archive/*"
   script:
     - 'ansible-playbook -i tests/ansible-docker/hosts tests/test.yml --tags build'
 
