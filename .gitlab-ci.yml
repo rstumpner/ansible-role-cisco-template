@@ -25,7 +25,6 @@ before_script:
   - pip install pyvmomi
   - pip install netaddr
   - pip install ciscoconfparse
-  - mkdir tests/state
   - ansible --version
 
 syntax-check:
