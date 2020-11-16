@@ -44,7 +44,7 @@ build-config:
   script:
     - 'ansible-playbook -i tests/ansible-docker/hosts tests/test.yml --tags build'
     - sed -i -e '/n=ansible.*/ c {'  tests/state/ansible-play.log
-    - printf "TOTAL $(cat tests/state/ansible-play.log | jq .stats.localhost.ok)  $(cat tests/state/ansible-play.log | jq .stats.localhost.changed) 100"
+    - printf "TOTAL $(cat tests/state/ansible-play.log | jq .stats.localhost.ok)  $(cat tests/state/ansible-play.log | jq .stats.localhost.changed) 100%"
 
 
 unit-test-config:
