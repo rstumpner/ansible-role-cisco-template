@@ -48,7 +48,7 @@ build-config:
     - CI_ANSIBLE_JOBS_CHANGED=$(cat tests/state/ansible-play.log | jq .stats.localhost.changed)
     - CI_ANSIBLE_JOBS_FAILED=$(cat tests/state/ansible-play.log | jq .stats.localhost.failures)
     - CI_ANSIBLE_JOBS_COVERAGE=$((($CI_ANSIBLE_JOBS_OK / $CI_ANSIBLE_JOBS_CHANGED) * 100))
-    - printf "TOTAL $CI_ANSIBLE_JOBS_OK  $CI_ANSIBLE_JOBS_CHANGED $CI_ANSIBLE_JOBS_COVERAGE%%"
+    - printf "TOTAL $CI_ANSIBLE_JOBS_OK  $CI_ANSIBLE_JOBS_FAILED $CI_ANSIBLE_JOBS_COVERAGE%%"
 
 
 unit-test-config:
