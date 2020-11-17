@@ -9,13 +9,15 @@ variables:
   ANSIBLE_FORCE_COLOR: 'true'
   GIT_SSL_NO_VERIFY: "1"
   ANSIBLE_HOST_KEY_CHECKING: 'false'
+  ANSIBLE_STDOUT_CALLBACK: 'json'
+  ANSIBLE_LOG_PATH: 'tests/state/ansible-play.log'
 # Docker Default Image for all Stages
 image: ubuntu:18.04
 
 # Before Script for all Stages
 before_script:
   - apt-get update -qq
-  - apt install --no-install-recommends -y python-minimal software-properties-common git vim iputils-ping mtr dnsutils rsync tree python-pip
+  - apt install --no-install-recommends -y python-minimal software-properties-common git vim iputils-ping mtr dnsutils rsync tree python-pip jq
   - apt-add-repository ppa:ansible/ansible
   - apt update
   - apt install -y ansible python-markupsafe python-ecdsa libyaml-0-2 python-jinja2 python-yaml python-paramiko python-httplib2 python-crypto sshpass
@@ -36,11 +38,17 @@ build-config:
     when: always
     paths:
       - "*/build/*"
-      - config/
-      - state/
-      - archive/
+      - "*/config/*"
+      - "*/state/*"
+      - "*/archive/*"
   script:
     - 'ansible-playbook -i tests/ansible-docker/hosts tests/test.yml --tags build'
+    - sed -i -e '/n=ansible.*/ c {'  tests/state/ansible-play.log
+    - CI_ANSIBLE_JOBS_OK=$(cat tests/state/ansible-play.log | jq .stats.localhost.ok)
+    - CI_ANSIBLE_JOBS_CHANGED=$(cat tests/state/ansible-play.log | jq .stats.localhost.changed)
+    - CI_ANSIBLE_JOBS_FAILED=$(cat tests/state/ansible-play.log | jq .stats.localhost.failures)
+    - CI_ANSIBLE_JOBS_COVERAGE=$((($CI_ANSIBLE_JOBS_OK / $CI_ANSIBLE_JOBS_CHANGED) * 100))
+    - printf "TOTAL $CI_ANSIBLE_JOBS_OK  $CI_ANSIBLE_JOBS_FAILED $CI_ANSIBLE_JOBS_COVERAGE%%"
 
 
 unit-test-config:
@@ -49,9 +57,9 @@ unit-test-config:
     when: always
     paths: 
       - "*/build/*"
-      - config/
-      - state/
-      - archive/
+      - "*/config/*"
+      - "*/state/*"
+      - "*/archive/*"
   script:
     - 'python tests/ciscoconfparse/cisco-cli-ut.py tests/build/ansible-role-cisco-template/localhost-ansible-role-cisco-template.conf'
 
