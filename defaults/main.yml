@@ -8,7 +8,9 @@ build_time: "{{ ansible_date_time.iso8601_micro |default('1970') }}"
 #ansible_ssh_host: "localhost"
 #ansible_ssh_user: admin
 #ansible_ssh_password: admin
-switch_id: 1000
+device_id: 1000
+# Compability Layer (DEPRECATED)
+switch_id: {{ device_id }}
 
 
 # Interface Variables to be (derived from Cisco pyats Datamodel / Openconfig)
