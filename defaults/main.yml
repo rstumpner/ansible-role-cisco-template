@@ -12,6 +12,30 @@ device_id: 1000
 # Compability Layer (DEPRECATED)
 switch_id: "{{ device_id }}"
 
+# VTP Configuration
+# VTP Mode
+# Options:
+# Default:
+# vtp_mode: transparent
+# vtp_mode: server
+# vtp_mode: client
+vtp_mode: transparent
+# VTP Domain Name
+vtp_domain: domain.vtp
+# VTP Version
+vtp_version: 3
+# VTP Password
+vtp_password: unknown
+
+# VLAN Configuration Cases
+vlan:
+  10:
+    name: ""
+  11:
+    name: vlan-with-name
+  12:
+    name: vlan-with-name-more-than-20-chars
+
 
 # Interface Variables to be (derived from Cisco pyats Datamodel / Openconfig)
 interfaces:

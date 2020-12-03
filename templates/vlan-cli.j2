@@ -1,0 +1,7 @@
+! Gernated by Ansible Role {{ role_name|basename }}
+! VLAN Configuration
+
+{% for vlanid , value in vlan.iteritems() %}
+vlan {{ vlanid }}
+  name {{ value.name }}
+{% endfor %}
