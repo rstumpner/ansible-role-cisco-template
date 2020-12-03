@@ -10,7 +10,7 @@ build_time: "{{ ansible_date_time.iso8601_micro |default('1970') }}"
 #ansible_ssh_password: admin
 device_id: 1000
 # Compability Layer (DEPRECATED)
-switch_id: {{ device_id }}
+switch_id: "{{ device_id }}"
 
 
 # Interface Variables to be (derived from Cisco pyats Datamodel / Openconfig)
