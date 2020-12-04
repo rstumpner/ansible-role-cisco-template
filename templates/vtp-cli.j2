@@ -1,0 +1,9 @@
+! Gernated by Ansible Role {{ role_name|basename }}
+! VRFs
+
+! VTP Configuration
+vtp version {{ vtp_version | default('2')}}
+vtp mode {{ vtp_mode | default('transparent') }}
+vtp domain {{ vtp_domain | default('domain.vtp') }}
+vtp password {{ vtp_password | default('unknown')}}
+
