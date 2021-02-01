@@ -1,0 +1,6 @@
+! Gernated by Ansible Role {{ role_name|basename }}
+! Nameserver
+
+ip name-server {% for nameserver , value in dns_server.iteritems() %} {{ nameserver }} {% endfor %}
+ip domain lookup
+
