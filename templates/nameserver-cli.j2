@@ -2,5 +2,6 @@
 ! Nameserver
 
 ip name-server {% for nameserver in dns_server %} {{ nameserver }} {% endfor %}
+
 ip domain lookup
 
