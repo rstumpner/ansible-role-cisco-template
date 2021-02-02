@@ -1,0 +1,25 @@
+! Gernated by Ansible Role {{ role_name|basename }}
+! Login config
+
+username {{ cisco_rescue_user|default('rescue') }} privilege 15 secret 5 {{ cisco_rescue_pwd|default('pwd123') }} 
+
+! Activate Login
+line con 0
+    access-class ACL_SSH-ACCESS in
+    privilege level 15
+    logging synchronous
+    login authentication {{ radius_server_authentication_group }}
+line vty 0 4
+    access-class ACL_SSH-ACCESS in
+    privilege level 15
+    logging synchronous
+    login authentication {{ radius_server_authentication_group }}
+    authorization exec {{ radius_server_authorization_group }}
+    transport input ssh
+line vty 5 15
+    access-class ACL_SSH-ACCESS in
+    privilege level 15
+    logging synchronous
+    login authentication {{ radius_server_authentication_group }}
+    authorization exec {{ radius_server_authorization_group }}
+    transport input ssh
