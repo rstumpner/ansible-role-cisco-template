@@ -13,6 +13,20 @@ def testhostname():
         tests = tests+1
     return tests  
 
+def test_domain_lookup():
+    tests = 0
+    for domainlookup_obj in parse.find_objects(r"^ip domain lookup"):
+        print("Domain Lookup: " + domainlookup_obj.text)
+        tests = tests+1
+    return tests  
+
+def test_ip_nameserver():
+    tests = 0
+    for nameserver_obj in parse.find_objects(r"^ip name-server"):
+        print("Found nameserver: " + nameserver_obj.text)
+        tests = tests+1
+    return tests  
+
 def testinterfaces():
     tests = 0
     for intf_obj in parse.find_objects('^interface'):
@@ -33,7 +47,7 @@ def start():
     # Reading of the Cisco Config file
     parse = CiscoConfParse(input_file, syntax='ios')
     unittests = [
-        {'name': 'TOTAL','testcounter': testhostname()+testinterfaces()+testvrf(),'miss': 0 ,'coverage':'100%' },
+        {'name': 'TOTAL','testcounter': testhostname()+test_domain_lookup()+test_ip_nameserver()+testinterfaces()+testvrf(),'miss': 0 ,'coverage':'100%' },
     ]
 
     j2_template = Template("{{ unittests.name }} {{ unittests.testcounter }} {{ unittests.miss }} {{ unittests.coverage }}")

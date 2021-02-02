@@ -8,9 +8,16 @@ build_time: "{{ ansible_date_time.iso8601_micro |default('1970') }}"
 #ansible_ssh_host: "localhost"
 #ansible_ssh_user: admin
 #ansible_ssh_password: admin
+# Global Device Variables
 device_id: 1000
 # Compability Layer (DEPRECATED)
 switch_id: "{{ device_id }}"
+dns_server:
+  - 10.1.1.100
+  - 10.1.1.110
+dhcp_server:
+  - 10.1.2.100
+  - 10.1.2.110
 
 # VTP Configuration
 # VTP Mode
