@@ -26,7 +26,7 @@ radius_server_ipv4: 10.0.0.1
 radius_server_key: pwd
 radius_server_group: "RADIUS_LOGIN"
 radius_server_authentication_group: "RADIUS_A"
-radius_server_authorisation_group: "RADIUS_AA"
+radius_server_authorization_group: "RADIUS_AA"
 
 # VTP Configuration
 # VTP Mode
