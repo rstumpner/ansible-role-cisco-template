@@ -1,0 +1,19 @@
+! Gernated by Ansible Role {{ role_name|basename }}
+! Radiusserver config
+
+aaa new-model
+aaa session-id common
+aaa authentication login default local
+!
+aaa authentication login {{ radius_server_authentication_group }} group {{ radius_server_group }} local
+aaa authorization exec {{ radius_server_authorization_group }} group {{ radius_server_group }} local
+
+
+! Userauth with Radius
+radius server {{ radius_server_name }}
+ address ipv4 {{ radius_server_ipv4 }} auth-port 1812 acct-port 1813
+ key 7 {{ radius_server_key }}
+
+!
+aaa group server radius RADIUS_LOGIN
+ server name {{ radius_server_name }}

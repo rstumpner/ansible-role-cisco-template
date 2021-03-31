@@ -18,6 +18,15 @@ dns_server:
 dhcp_server:
   - 10.1.2.100
   - 10.1.2.110
+cisco_rescue_user: "rescue"
+cisco_rescue_pwd: "password"
+
+radius_server_name: radius.example.com
+radius_server_ipv4: 10.0.0.1
+radius_server_key: pwd
+radius_server_group: "RADIUS_LOGIN"
+radius_server_authentication_group: "RADIUS_A"
+radius_server_authorization_group: "RADIUS_AA"
 
 # VTP Configuration
 # VTP Mode
