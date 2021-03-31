@@ -3,5 +3,7 @@
 
 - hosts: all
 #  gather_facts: true
+#  vars:
+
   roles:
     - { role: '../../ansible-role-cisco-template' }
