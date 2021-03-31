@@ -18,7 +18,7 @@ dns_server:
 dhcp_server:
   - 10.1.2.100
   - 10.1.2.110
-cisco_rescue_user: "{{ ansible_ssh_user }}"
+cisco_rescue_user: "rescue"
 cisco_rescue_pwd: "{{ ansible_ssh_password }}"
 
 radius_server_name: radius.example.com
