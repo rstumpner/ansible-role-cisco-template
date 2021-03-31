@@ -3,5 +3,5 @@ localhost ansible_connection=local ansible_python_interpreter=python3
 
 
 [cisco-sandbox-always-on]
-ios-xe-mgmt.cisco.com ansible_port=8181 ansible_connection=local 
-ios-xe-mgmt-latest.cisco.com ansible_port=8181 ansible_connection=local
+ios-xe-mgmt.cisco.com ansible_port=8181 ansible_connection=local ansible_ssh_password=developer ansible_ssh_user=C1sco12345
+ios-xe-mgmt-latest.cisco.com ansible_port=8181 ansible_connection=local ansible_ssh_password=developer ansible_ssh_user=C1sco12345
