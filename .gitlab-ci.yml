@@ -63,6 +63,19 @@ unit-test-config:
   script:
     - 'python tests/ciscoconfparse/cisco-cli-ut.py tests/build/ansible-role-cisco-template/localhost-ansible-role-cisco-template.conf'
 
+release-configs:
+  variables:
+    PACKAGENAME: 'build-test'
+    VERSION: '1.0.0'
+  image: curlimages/curl:latest
+  stage: test
+  before_script:
+     - echo "override before script"
+  script:
+    - tar -czvf ${PACKAGENAME}.${VERSION}.tar.gz tests/build/
+    - 'curl --header "JOB-TOKEN: $CI_JOB_TOKEN" --upload-file ${PACKAGENAME}.${VERSION}.tar.gz "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/${PACKAGENAME}/${CI_COMMIT_TAG}/${PACKAGENAME}.${CI_COMMIT_TAG}.tar.gz"'
+
+
 testing-diff-checkmode:
   stage: test
   artifacts:
