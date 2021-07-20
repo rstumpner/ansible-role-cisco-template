@@ -1,7 +1,7 @@
 ---
 # Set Ansible to python3
 
-- hosts: all
+- hosts: cisco-sandbox-always-on
 #  gather_facts: true
   vars:
      ansible_connection: local 
