@@ -3,7 +3,9 @@
 
 - hosts: all
 #  gather_facts: true
-#  vars:
-
+  vars:
+     ansible_connection: local 
+     ansible_ssh_user: developer
+     ansible_ssh_password: C1sco12345
   roles:
     - { role: '../../ansible-role-cisco-template' }
