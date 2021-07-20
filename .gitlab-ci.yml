@@ -24,7 +24,7 @@ before_script:
   - pip install pysphere
   - pip install pyvmomi
   - pip install netaddr
-  - pip install ciscoconfparse
+  - pip install ciscoconfparse==1.5.36
   - ansible --version
 
 syntax-check:
