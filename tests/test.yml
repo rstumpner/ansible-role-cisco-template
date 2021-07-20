@@ -1,7 +1,11 @@
 ---
 # Set Ansible to python3
 
-- hosts: all
+- hosts: cisco-sandbox-always-on
 #  gather_facts: true
+  vars:
+     ansible_connection: local 
+     ansible_ssh_user: developer
+     ansible_ssh_password: C1sco12345
   roles:
     - { role: '../../ansible-role-cisco-template' }

@@ -24,7 +24,7 @@ before_script:
   - pip install pysphere
   - pip install pyvmomi
   - pip install netaddr
-  - pip install ciscoconfparse
+  - pip install ciscoconfparse==1.5.36
   - ansible --version
 
 syntax-check:
@@ -44,11 +44,11 @@ build-config:
   script:
     - 'ansible-playbook -i tests/ansible-docker/hosts tests/test.yml --tags build'
     - sed -i -e '/n=ansible.*/ c {'  tests/state/ansible-play.log
-    - CI_ANSIBLE_JOBS_OK=$(cat tests/state/ansible-play.log | jq .stats.localhost.ok)
-    - CI_ANSIBLE_JOBS_CHANGED=$(cat tests/state/ansible-play.log | jq .stats.localhost.changed)
-    - CI_ANSIBLE_JOBS_FAILED=$(cat tests/state/ansible-play.log | jq .stats.localhost.failures)
-    - CI_ANSIBLE_JOBS_COVERAGE=$((($CI_ANSIBLE_JOBS_OK / $CI_ANSIBLE_JOBS_CHANGED) * 100))
-    - printf "TOTAL $CI_ANSIBLE_JOBS_OK  $CI_ANSIBLE_JOBS_FAILED $CI_ANSIBLE_JOBS_COVERAGE%%"
+#    - CI_ANSIBLE_JOBS_OK=$(cat tests/state/ansible-play.log | jq .stats.localhost.ok)
+#    - CI_ANSIBLE_JOBS_CHANGED=$(cat tests/state/ansible-play.log | jq .stats.localhost.changed)
+#    - CI_ANSIBLE_JOBS_FAILED=$(cat tests/state/ansible-play.log | jq .stats.localhost.failures)
+#    - CI_ANSIBLE_JOBS_COVERAGE=$((($CI_ANSIBLE_JOBS_OK / $CI_ANSIBLE_JOBS_CHANGED) * 100))
+#    - printf "TOTAL $CI_ANSIBLE_JOBS_OK  $CI_ANSIBLE_JOBS_FAILED $CI_ANSIBLE_JOBS_COVERAGE%%"
 
 
 unit-test-config:
@@ -65,16 +65,16 @@ unit-test-config:
 
 release-configs:
   variables:
-    PACKAGENAME: 'build-test'
+    PACKAGENAME: 'build'
     VERSION: '1.0.0'
   image: curlimages/curl:latest
   stage: test
-  before_script:
-     - echo "override before script"
+  only:
+    - master
+    - tags
   script:
     - tar -czvf ${PACKAGENAME}.${VERSION}.tar.gz tests/build/
     - 'curl --header "JOB-TOKEN: $CI_JOB_TOKEN" --upload-file ${PACKAGENAME}.${VERSION}.tar.gz "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/${PACKAGENAME}/${CI_COMMIT_TAG}/${PACKAGENAME}.${CI_COMMIT_TAG}.tar.gz"'
-
 
 testing-diff-checkmode:
   stage: test
